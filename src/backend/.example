@@ -1,0 +1,3 @@
+# Rename this file to .env and replace the <username> and <password> with our admin login details
+PORT=5000
+MONGO_URI=mongodb+srv://<username>:<password>@productstore.geewome.mongodb.net/?retryWrites=true&w=majority
