@@ -1,3 +1,7 @@
+/**
+ * This file contains the frontend App
+ */
+
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 //Pages and Components

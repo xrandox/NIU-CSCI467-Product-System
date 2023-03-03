@@ -1,14 +1,22 @@
+/**
+ * This file provides database functions for products that are then referenced by /routes/inventory.js
+ */
+
 const Product = require('../models/productModel')
 const mongoose = require('mongoose')
 
-// all products
+/**
+ * Returns a json of all products, sorted by ascending id
+ */
 const getProducts = async (req, res) => {
-    const products = await Product.find({}).sort({id: -1})
+    const products = await Product.find({}).sort({_id: -1})
 
     res.status(200).json(products)
 }
 
-// single product
+/**
+ * Attempts to return a json of the specified product
+ */
 const getProduct = async (req, res) => {
     const { id } = req.params
 
@@ -25,7 +33,10 @@ const getProduct = async (req, res) => {
     res.status(200).json(product)
 }
 
-// add product
+/**
+ * Adds a product to the database collection
+ * Returns a json of the added product if successful, or a json with an error message if not
+ */
 const addProduct = async (req, res) => {
     const { name, quantity } = req.body
 
@@ -46,7 +57,9 @@ const addProduct = async (req, res) => {
 }
 
 
-// delete product
+/**
+ * Attempts to delete a product from the database collection with the given id
+ */
 const deleteProduct = async (req, res) => {
     const { id } = req.params
 
@@ -63,7 +76,9 @@ const deleteProduct = async (req, res) => {
     res.status(200).json(product)
 }
 
-// update product
+/**
+ * Attempts to update a product in the database collection with the new parameters, by the given id
+ */
 const updateProduct = async (req, res) => {
     const { id } = req.params
 

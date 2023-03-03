@@ -1,3 +1,7 @@
+/**
+ * This file contains the code for the Navbar component shown on every page
+ */
+
 import { Link } from 'react-router-dom'
 
 const Navbar = () => {

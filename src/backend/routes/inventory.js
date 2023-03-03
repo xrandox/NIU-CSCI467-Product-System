@@ -1,3 +1,7 @@
+/**
+ * This file contains the API routes for querying the inventory system
+ */
+
 const express = require('express')
 const { getProducts, getProduct, addProduct, deleteProduct, updateProduct } = require('../controllers/inventoryController')
 const router = express.Router()

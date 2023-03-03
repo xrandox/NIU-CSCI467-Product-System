@@ -1,12 +1,22 @@
+/**
+ * This file contains the database model for an order
+ */
+
 const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
+/**
+ * This schema represents a single ordered product within the order
+ */
 const orderedProduct = new Schema({
     productID: { type: mongoose.Types.ObjectId, required: true },
     quantity: { type: Number, required: true }
 })
 
+/**
+ * This schema represents a single order
+ */
 const orderSchema = new Schema({
     customerID: { type: mongoose.Types.ObjectId, required: true },
     products: { type: [orderedProduct], required: true },
