@@ -14,3 +14,36 @@
 > A third interface also runs in the warehouse, at the receiving desk. Whenever products are delivered they are added to the inventory: they can be recognized by their description or part number. Their quantity on hand is updated. Note that the legacy product database does not contain inventory information.
 
 > And lastly, there will be an administrative interface that allows to set the shipping and handling charges, as well as view all orders. Shipping and handling charges are based on the weight of a complete order. This interface allows to set the weight brackets and their charges. Orders can be searched based on date range, status (authorized, shipped) or prize range. The complete order detail is displayed for a selected order.
+
+# How-to
+
+### Requires:
+- Node.js + npm -> https://nodejs.org/en/download/
+
+### Recommended: 
+- Github Desktop (Repo Management) -> https://desktop.github.com/
+- Visual Studio Code (IDE) -> https://code.visualstudio.com/download
+- Postman (Backend Testing) -> https://www.postman.com/downloads/
+
+### Set-up
+- After installing node.js, clone the repo
+- Open with Visual Studio Code
+- Install dependencies
+  - `Terminal` -> `New Terminal` -> `cd src/frontend` -> `npm install`
+  - `cd ../backend` -> `npm install`
+  - If you don't have nodemon installed already, `npm install --global nodemon`
+- Set up database credentials
+  - Create a copy of the `.example` file in the `/backend/` directory named `.env`
+  - Update the credentials with the credentials from our discord
+- Start local server
+  - While in the backend directory, do `npm run dev`
+- Start local client
+  - With the server running, open a new terminal with Ctrl+Shift+\` 
+  - Drag the server terminal to the right side of the console so that you can see both terminals
+  - In the new terminal, cd into the frontend folder `cd src/frontend`
+  - While in the `/frontend/` folder, do `npm start`
+  - The development server should automatically open
+  
+Both the server and client should automatically update when you save changes to their respective files. Ctrl+C in their terminal if you need to terminate either one.
+
+If you have any issues, ping null in the discord 
