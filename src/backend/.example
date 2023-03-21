@@ -1,4 +1,6 @@
 # Copy this file, rename the copy to .env and replace the <username> and <password> with our admin login details
+# Also add the SECRET
 # We use this to prevent exposing our actual credentials when we make the repo public
 PORT=5000
 MONGO_URI=...
+SECRET=
