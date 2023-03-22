@@ -3,7 +3,6 @@
  */
 
 const User = require("../models/User");
-const mongoose = require("mongoose");
 
 const prepareProfile = async (req, res, next, username) => {
   User.findOne({ username: username })

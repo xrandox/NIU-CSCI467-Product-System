@@ -1,3 +1,7 @@
+/**
+ * Provides generic routing
+ */
+
 var router = require("express").Router();
 
 // Catch validation errors thrown by mongoose
