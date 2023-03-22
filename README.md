@@ -29,9 +29,11 @@
 - After installing node.js, clone the repo
 - Open with Visual Studio Code
 - Install dependencies
-  - `Terminal` -> `New Terminal` -> `cd src/frontend` -> `npm install`
-  - `cd ../backend` -> `npm install`
+  - `Terminal` -> `New Terminal`
+  - I recommend using yarn over npm. If you don't have yarn installed, `npm install --global yarn`
   - If you don't have nodemon installed already, `npm install --global nodemon`
+  - `cd src/frontend` -> `yarn install`
+  - `cd ../backend` -> `yarn install`
 - Set up database credentials
   - Create a copy of the `.example` file in the `/backend/` directory named `.env`
   - Update the credentials with the credentials from our discord
