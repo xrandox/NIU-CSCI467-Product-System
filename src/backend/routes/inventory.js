@@ -2,18 +2,26 @@
  * This file contains the API routes for querying the inventory system
  */
 
-const express = require('express')
-const { getProducts, getProduct, addProduct, deleteProduct, updateProduct } = require('../controllers/inventoryController')
-const router = express.Router()
+const express = require("express");
+const {
+  getProducts,
+  getProduct,
+  addProduct,
+  deleteProduct,
+  updateProduct,
+} = require("../controllers/inventory");
+const auth = require('./auth')
+const router = express.Router();
+const { requireEmployee } = require('./permissions');
 
-router.get('/', getProducts)
+router.get("/", getProducts);
 
-router.get('/:id', getProduct)
+router.get("/:id", getProduct);
 
-router.post('/', addProduct)
+router.post("/", auth.required, requireEmployee, addProduct);
 
-router.delete('/:id', deleteProduct)
+router.delete("/:id", auth.required, requireEmployee, deleteProduct);
 
-router.patch('/:id', updateProduct)
+router.patch("/:id", auth.required, requireEmployee, updateProduct);
 
-module.exports = router
+module.exports = router;
