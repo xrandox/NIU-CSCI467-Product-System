@@ -5,6 +5,9 @@
 const User = require("../models/User");
 const passport = require("passport");
 
+/**
+ * Gets a users authentication json by ID
+ */
 const getUser = async (req, res, next) => {
   User.findById(req.auth.id)
     .then(function (user) {
@@ -17,7 +20,10 @@ const getUser = async (req, res, next) => {
     .catch(next);
 };
 
-//TODO: Add more registration fields?
+/**
+ * Registers a new user in the database
+ * TODO: Add more registration fields?
+ */
 const registerUser = async (req, res, next) => {
   var user = new User();
 
@@ -33,6 +39,9 @@ const registerUser = async (req, res, next) => {
     .catch(next);
 };
 
+/**
+ * Checks provided login details against the saved credentials
+ */
 const loginUser = async (req, res, next) => {
   if (!req.body.user.email) {
     return res.status(422).json({ errors: { email: "can't be blank" } });
@@ -60,6 +69,10 @@ const loginUser = async (req, res, next) => {
   )(req, res, next);
 };
 
+/**
+ * Updates a user
+ * TODO: Probably need to restrict what can be changed here, and allow admins a more powerful endpoint
+ */
 const updateUser = async (req, res, next) => {
   User.findById(req.auth.id)
     .then(function (user) {

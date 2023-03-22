@@ -5,12 +5,18 @@
 const SHBracket = require("../models/SHBracket");
 const mongoose = require("mongoose");
 
+/**
+ * Gets a json of all brackets
+ */
 const getBrackets = async (req, res) => {
-  const brackets = await SHBracket.find({}).sort({ minWeight: -1 });
+  const brackets = await SHBracket.find({}).sort({ _id: -1 });
 
   res.status(200).json(brackets);
 };
 
+/**
+ * Updates an existing bracket by ID
+ */
 const updateBracket = async (req, res) => {
   const { id } = req.params;
 
@@ -32,6 +38,10 @@ const updateBracket = async (req, res) => {
   res.status(200).json(bracket);
 };
 
+/**
+ * Adds a new bracket
+ * TODO: more validation here -- no overlapping brackets would be smart
+ */
 const addBracket = async (req, res) => {
   const { minWeight, maxWeight, charge } = req.body;
 
@@ -60,6 +70,9 @@ const addBracket = async (req, res) => {
   }
 };
 
+/**
+ * Deletes a bracket by ID
+ */
 const deleteBracket = async (req, res) => {
   const { id } = req.params;
 

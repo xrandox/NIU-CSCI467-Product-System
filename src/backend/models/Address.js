@@ -4,6 +4,10 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+/**
+ * A Schema representing an address
+ * TODO: Validation?
+ */
 const addressSchema = new Schema({
   name: String,
   street: String,

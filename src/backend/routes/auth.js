@@ -6,6 +6,9 @@ require("dotenv").config();
 var { expressjwt: jwt } = require("express-jwt");
 const secret = process.env.SECRET;
 
+/**
+ * Splits the token out of the header
+ */
 function getTokenFromHeader(req) {
   if (req.headers.authorization.split(" ")[0] === "Token") {
     return req.headers.authorization.split(" ")[1];
@@ -14,6 +17,9 @@ function getTokenFromHeader(req) {
   return null;
 }
 
+/**
+ * Two different options depending whether it's important to have the user signed in or not
+ */
 var auth = {
   required: jwt({
     secret: secret,

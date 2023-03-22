@@ -23,7 +23,7 @@ const userSchema = new Schema(
       unique: true,
       required: [true, "Must have a username"],
       match: [
-        /^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$/,
+        /^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$/, // Might not need such a strict regex
         "invalid username",
       ],
       index: true,
@@ -48,6 +48,9 @@ const userSchema = new Schema(
 // Validate that unique fields are indeed unique
 userSchema.plugin(uniqueValidator, { message: "is already taken." });
 
+/**
+ * Sets the password with salt + hash so we aren't storing plaintext passwords
+ */
 userSchema.methods.setPassword = function (password) {
   this.salt = crypto.randomBytes(16).toString("hex");
   this.passwordHash = crypto
@@ -63,7 +66,7 @@ userSchema.methods.validPassword = function (password) {
   return this.passwordHash === hash;
 };
 
-// Generate our token
+// Generates our token...used for when we need to ensure secure communication between client and server
 userSchema.methods.generateJWT = function () {
   var today = new Date();
   var exp = new Date(today);

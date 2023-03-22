@@ -6,6 +6,10 @@ const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
+/**
+ * This schema represents a single shipping and handling bracket
+ * TODO: More validation?
+ */
 const shBracketSchema = new Schema({
   minWeight: mongoose.Types.Decimal128,
   maxWeight: mongoose.Types.Decimal128,

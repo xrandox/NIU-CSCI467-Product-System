@@ -6,10 +6,11 @@ var passport = require("passport");
 var LocalStrategy = require("passport-local").Strategy;
 var User = require("../models/User");
 
+// Define our local strategy
 passport.use(
   new LocalStrategy(
     {
-      usernameField: "user[email]",
+      usernameField: "user[email]", // this field can contain email OR username, allowing the user to login using either
       passwordField: "user[password]",
     },
     async (email, password, done) => {

@@ -4,6 +4,9 @@
 
 const User = require("../models/User");
 
+/**
+ * Prepares a profile
+ */
 const prepareProfile = async (req, res, next, username) => {
   User.findOne({ username: username })
     .then(function (user) {
@@ -18,6 +21,9 @@ const prepareProfile = async (req, res, next, username) => {
     .catch(next);
 };
 
+/**
+ * Returns the public-facing information about a user
+ */
 const getProfile = async (req, res, next) => {
   return res.json({ profile: req.profile.toPublicJSON() });
 };
