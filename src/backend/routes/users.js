@@ -10,18 +10,19 @@ const {
   updateUser,
 } = require("../controllers/users");
 const auth = require("./auth");
+const User = require("../models/User");
 const router = express.Router();
 
 // Update User
-router.put("/user", auth.required, updateUser);
+router.put("/", auth.required, updateUser);
 
-// Grab User
-router.get("/user", auth.required, getUser);
+// Grab Current User
+router.get("/", auth.required, getUser);
 
 // Registration
-router.post("/users", registerUser);
+router.post("/", registerUser);
 
 // Login
-router.post("/users/login", loginUser);
+router.post("/login", loginUser);
 
 module.exports = router;
