@@ -8,8 +8,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const inventoryRoutes = require("./routes/inventory");
 const userRoutes = require("./routes/users");
-const adminRoutes = require("./routes/admin");
+const shbracketRoutes = require("./routes/shbrackets");
 const profileRoutes = require("./routes/profiles");
+const adminRoutes = require("./routes/admin");
 require('./cfg/passport');
 
 // Suppress strict query warning
@@ -29,8 +30,9 @@ app.use(express.json());
 
 // Routes
 app.use("/api/inventory/", inventoryRoutes);
-app.use("/api/", userRoutes);
+app.use("/api/users/", userRoutes);
 app.use("/api/admin/", adminRoutes);
+app.use("/api/shbrackets/", shbracketRoutes);
 app.use("/api/profiles/", profileRoutes);
 
 // Connect to DB
