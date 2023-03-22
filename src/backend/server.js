@@ -7,8 +7,13 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const inventoryRoutes = require("./routes/inventory");
-const userRoutes = require("./routes/user");
+const userRoutes = require("./routes/users");
 const adminRoutes = require("./routes/admin");
+const profileRoutes = require("./routes/profiles");
+require('./cfg/passport');
+
+// Suppress strict query warning
+mongoose.set('strictQuery', true);
 
 // Create Express App
 const app = express();
@@ -24,8 +29,9 @@ app.use(express.json());
 
 // Routes
 app.use("/api/inventory/", inventoryRoutes);
-app.use("/api/user/", userRoutes);
+app.use("/api/", userRoutes);
 app.use("/api/admin/", adminRoutes);
+app.use("/api/profiles/", profileRoutes);
 
 // Connect to DB
 mongoose
