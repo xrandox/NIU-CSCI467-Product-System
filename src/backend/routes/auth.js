@@ -1,3 +1,7 @@
+/**
+ * This file provides JWT authorization, with both optional and required credentials
+ */
+
 require("dotenv").config();
 var { expressjwt: jwt } = require("express-jwt");
 const secret = process.env.SECRET;
@@ -13,17 +17,16 @@ function getTokenFromHeader(req) {
 var auth = {
   required: jwt({
     secret: secret,
-    userProperty: "payload",
     getToken: getTokenFromHeader,
     algorithms: ["HS256"],
   }),
   optional: jwt({
     secret: secret,
-    userProperty: "payload",
     credentialsRequired: false,
     getToken: getTokenFromHeader,
     algorithms: ["HS256"],
   }),
 };
+
 
 module.exports = auth;

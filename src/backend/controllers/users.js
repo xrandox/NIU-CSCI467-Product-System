@@ -3,11 +3,10 @@
  */
 
 const User = require("../models/User");
-const mongoose = require("mongoose");
 const passport = require("passport");
 
 const getUser = async (req, res, next) => {
-  User.findById(req.payload.id)
+  User.findById(req.auth.id)
     .then(function (user) {
       if (!user) {
         return res.sendStatus(401);
@@ -62,7 +61,7 @@ const loginUser = async (req, res, next) => {
 };
 
 const updateUser = async (req, res, next) => {
-  User.findById(req.payload.id)
+  User.findById(req.auth.id)
     .then(function (user) {
       if (!user) {
         return res.sendStatus(401);
