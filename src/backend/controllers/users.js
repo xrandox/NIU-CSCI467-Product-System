@@ -6,7 +6,7 @@ const User = require("../models/User");
 const passport = require("passport");
 
 /**
- * Gets a users authentication json by ID
+ * Gets the current users authentication json by ID
  */
 const getUser = async (req, res, next) => {
   User.findById(req.auth.id)
