@@ -1,5 +1,6 @@
 /**
  * This file provides JWT authorization, with both optional and required credentials
+ * Allows us to have secure user and role validation
  */
 
 require("dotenv").config();

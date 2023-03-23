@@ -10,10 +10,9 @@ const {
   updateUser,
 } = require("../controllers/users");
 const auth = require("./auth");
-const User = require("../models/User");
 const router = express.Router();
 
-// Update User
+// Update self
 router.put("/", auth.required, updateUser);
 
 // Grab Current User

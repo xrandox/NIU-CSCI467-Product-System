@@ -1,5 +1,5 @@
 /**
- * This file contains the API routes for querying the inventory system
+ * Inventory routes
  */
 
 const express = require("express");
@@ -13,6 +13,8 @@ const {
 const auth = require('./auth')
 const router = express.Router();
 const { requireEmployee } = require('./permissions');
+
+// TODO: These should probably be split out into public product routes and employee inventory management routes
 
 router.get("/", getProducts);
 

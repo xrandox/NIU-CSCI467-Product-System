@@ -12,7 +12,7 @@ const Address = require("./Address");
  */
 const orderSchema = new Schema(
   {
-    customer: { type: mongoose.Types.ObjectId, required: true },
+    customer: { type: mongoose.Types.ObjectId, required: true, index: true },
     shippingAddress: { type: Address.schema, required: true },
     products: { type: [OrderedProduct.schema], required: true },
     total: { type: mongoose.Types.Decimal128, required: true },
@@ -28,5 +28,7 @@ const orderSchema = new Schema(
   },
   { timestamps: true }
 );
+
+// TODO: Function to create a user-facing JSON rather than returning the whole order object
 
 module.exports = mongoose.model("Order", orderSchema);
