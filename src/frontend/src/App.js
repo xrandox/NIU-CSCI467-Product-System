@@ -8,6 +8,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Store from "./pages/Store";
 import Inventory from "./pages/Inventory/Inventory";
+import Login from "./pages/Login";
+import AdminTools from "./pages/AdminTools";
+import Profile from "./pages/Profile";
 import Navbar from "./components/Navbar";
 
 function App() {
@@ -20,6 +23,9 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/store/" element={<Store />} />
             <Route path="/inventory/" element={<Inventory />} />
+            <Route path="/login/" element={<Login />} />
+            <Route path="/admin/" element={<AdminTools />} />
+            <Route path="/profile/" element={<Profile />} />
           </Routes>
         </div>
       </BrowserRouter>
