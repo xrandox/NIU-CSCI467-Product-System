@@ -54,7 +54,7 @@ const addOrder = async (req, res, next) => {
   order.customer = req.auth.id;
   order.total = req.body.order.total;
   address = req.body.order.shippingAddress;
-  order.products = req.body.order.products;
+  order.parts = req.body.order.parts;
   order.shippingAddress = address;
 
   order
