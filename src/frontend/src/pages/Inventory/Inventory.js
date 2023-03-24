@@ -1,36 +1,37 @@
-import { useEffect } from "react"
-import { useInventoryContext } from "../../hooks/useInventoryContext"
+import { useEffect } from "react";
+import { useInventoryContext } from "../../hooks/useInventoryContext";
 // Components
-import ProductDetails from '../../components/ProductDetails'
-import ProductForm from "../../components/ProductForm"
+import ProductDetails from "../../components/ProductDetails";
+import ProductForm from "../../components/ProductForm";
+import authorization from "../../components/Auth";
 
 const Inventory = () => {
+  const { inventory, dispatch } = useInventoryContext();
 
-    const {inventory, dispatch} = useInventoryContext()
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const resp = await fetch("/api/parts");
+      const json = await resp.json();
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            const resp = await fetch('/api/inventory')
-            const json = await resp.json()
+      if (resp.ok) {
+        dispatch({ type: "SET_INVENTORY", payload: json });
+      }
+    };
 
-            if (resp.ok) {
-                dispatch({type: 'SET_INVENTORY', payload: json})
-            }
-        }
+    fetchProducts();
+  }, [dispatch]);
 
-        fetchProducts()
-    }, [dispatch])
+  return (
+    <div className="store">
+      <div className="products">
+        {inventory &&
+          inventory.map((product) => (
+            <ProductDetails key={product.number} product={product} />
+          ))}
+      </div>
+      <ProductForm />
+    </div>
+  );
+};
 
-    return (
-        <div className="store">
-            <div className="products">
-                {inventory && inventory.map((product) => (
-                    <ProductDetails key={product._id} product={product}/>
-                ))}
-            </div>
-            <ProductForm/>
-        </div>
-    )
-}
-
-export default Inventory
+export default authorization(Inventory, ["admin", "employee"]);

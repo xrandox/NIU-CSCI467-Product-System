@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 // Components
 import StoreProduct from "../components/StoreProduct";
@@ -8,15 +9,11 @@ const Store = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const resp = await fetch("/api/inventory");
-      const json = await resp.json();
-
-      if (resp.ok) {
-        setProducts(json);
-      }
+      const response = await axios.get("/api/parts/");
+      setProducts(response.data);
     };
 
-    fetchProducts();
+    fetchProducts().catch(console.error);
   }, []);
 
   return (
@@ -24,7 +21,7 @@ const Store = () => {
       <div className="products">
         {products &&
           products.map((product) => (
-            <StoreProduct key={product._id} product={product} />
+            <StoreProduct key={product.number} product={product} />
           ))}
       </div>
     </div>

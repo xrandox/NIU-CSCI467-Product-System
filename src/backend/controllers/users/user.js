@@ -37,7 +37,7 @@ const registerUser = async (req, res) => {
     const result = await user.save();
     return res.json({ user: result.toAuthJSON() });
   } catch (err) {
-    if (err.name === 'ValidationError') {
+    if (err.name === "ValidationError") {
       return res.status(400).json({ error: err.message });
     }
     res.status(500).json({ error: "Something went wrong" });
@@ -66,7 +66,7 @@ const loginUser = async (req, res, next) => {
 
       if (user) {
         user.token = user.generateJWT();
-        return res.json({ user: user.toAuthJSON() });
+        return res.json(user.toAuthJSON());
       } else {
         return res.status(422).json(info);
       }
@@ -102,9 +102,14 @@ const updateUser = async (req, res, next) => {
         user.orders = req.body.user.orders;
       }
 
-      return user.save().then(function () {
-        return res.json({ user: user.toAuthJSON() });
-      });
+      return user
+        .save()
+        .then(function () {
+          return res.json({ user: user.toAdminJSON() });
+        })
+        .catch((error) => {
+          return res.status(500).json({ error: error });
+        });
     })
     .catch(next);
 };

@@ -4,7 +4,7 @@
  */
 
 require("dotenv").config();
-var { expressjwt: jwt } = require("express-jwt");
+var { expressjwt: jwt, UnauthorizedError } = require("express-jwt");
 const secret = process.env.SECRET;
 
 /**
@@ -21,21 +21,28 @@ function getTokenFromHeader(req) {
 }
 
 /**
- * Two different options depending whether it's important to have the user signed in or not
+ * Required auth needs to have some error handling for unauthorized
  */
-var auth = {
-  required: jwt({
+function requireAuth(req, res, next) {
+  jwt({
     secret: secret,
     getToken: getTokenFromHeader,
     algorithms: ["HS256"],
-  }),
-  optional: jwt({
+  })(req, res, function (err) {
+    if (err instanceof UnauthorizedError) {
+      return res.status(401).json({ error: "User not logged in" });
+    } else {
+      next(err);
+    }
+  });
+}
+
+module.exports = {
+  authRequired: requireAuth,
+  authOptional: jwt({
     secret: secret,
     credentialsRequired: false,
     getToken: getTokenFromHeader,
     algorithms: ["HS256"],
   }),
 };
-
-
-module.exports = auth;

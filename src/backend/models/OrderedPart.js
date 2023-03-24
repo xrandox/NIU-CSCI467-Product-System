@@ -10,7 +10,7 @@ const Schema = mongoose.Schema;
  * This schema represents a single ordered part within the order
  */
 const orderedPartSchema = new Schema({
-  partID: mongoose.Types.ObjectId,
+  partNumber: Number,
   quantity: Number,
   price: mongoose.Types.Decimal128,
 });

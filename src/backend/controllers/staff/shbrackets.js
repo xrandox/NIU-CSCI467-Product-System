@@ -23,23 +23,23 @@ const updateBracket = async (req, res) => {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(404).json({ error: "Bracket does not exist" });
     }
-  
+
     const bracket = await SHBracket.findOneAndUpdate(
       { _id: id },
       {
         ...req.body,
-      }
+      },
+      { new: true }
     );
-  
+
     if (!bracket) {
       return res.status(404).json({ error: "Bracket does not exist" });
     }
-  
+
     res.status(200).json(bracket);
   } catch (error) {
-    res.status(500).json({error: "Error updating bracket"})
+    res.status(500).json({ error: "Error updating bracket" });
   }
-
 };
 
 /**

@@ -5,9 +5,16 @@
 const ProductDetails = ({ product }) => {
   return (
     <div className="product-details">
-      <h4>{product.name}</h4>
+      <h4>{product.description}</h4>
+      <div>
+        <img src={product.pictureURL} alt={product.name} />
+      </div>
       <p>
-        <strong>Available: </strong>
+        <strong>Price: </strong>
+        {product.price}
+      </p>
+      <p>
+        <strong>Quantity Available: </strong>
         {product.quantity}
       </p>
     </div>
