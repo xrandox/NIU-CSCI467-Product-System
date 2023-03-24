@@ -38,7 +38,7 @@ const userSchema = new Schema(
     name: String,
     passwordHash: String,
     salt: String,
-    role: { type: String, default: "user" },
+    role: { type: String, enum: ['user', 'employee', 'admin'], default: 'user' },
     address: { type: Address.schema },
     orders: { type: [mongoose.Types.ObjectId] },
   },
@@ -101,5 +101,19 @@ userSchema.methods.toPublicJSON = function () {
     name: this.name,
   };
 };
+
+// Generates a "prettier" json for admins to view
+userSchema.methods.toAdminJSON = function () {
+  return{
+    documentID: this._id,
+    username: this.username,
+    email: this.email,
+    name: this.name,
+    role: this.role,
+    address: this.address,
+    orders: this.orders,
+    createdAt: this.createdAt
+  }
+}
 
 module.exports = mongoose.model("User", userSchema);

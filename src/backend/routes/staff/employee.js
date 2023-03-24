@@ -8,9 +8,9 @@
     getOrder,
     updateOrder,
     getUserOrders
-} = require("../controllers/staff");
-const auth = require("./auth");
-const { requireEmployee } = require("./permissions");
+} = require("../../controllers/staff/employee");
+const auth = require("../util/auth");
+const { requireEmployee } = require("../util/permissions");
 const router = express.Router();
 
 // Get all orders

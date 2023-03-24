@@ -1,5 +1,5 @@
 /**
- * Shipping & Handling Bracket routes
+ * Shipping & Handling Bracket Routes
  */
 
 const express = require("express");
@@ -8,10 +8,10 @@ const {
   updateBracket,
   addBracket,
   deleteBracket,
-} = require("../controllers/shbrackets");
+} = require("../../controllers/staff/shbrackets");
 const router = express.Router();
-const auth = require("./auth");
-const { requireAdmin } = require("./permissions");
+const auth = require("../util/auth");
+const { requireAdmin } = require("../util/permissions");
 
 // Get all S&H brackets
 router.get("/", auth.required, requireAdmin, getBrackets);

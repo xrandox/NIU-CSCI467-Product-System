@@ -1,10 +1,9 @@
 /**
- * This file contains the API routes for submitting a credit card
+ * Credit Card Processing Routes
  */
 
  const express = require("express");
- const { submitCard } = require("../controllers/credit");
- const auth = require("./auth");
+ const { submitCard } = require("../../controllers/external/credit");
  const router = express.Router();
  
  // Submit a credit card transaction

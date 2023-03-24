@@ -2,7 +2,7 @@
  * This file provides database functions for users that are then referenced by /routes/user.js
  */
 
-const User = require("../models/User");
+const User = require("../../models/User");
 const passport = require("passport");
 
 /**
@@ -23,20 +23,25 @@ const getUser = async (req, res, next) => {
 /**
  * Registers a new user in the database
  * TODO: Add more registration fields?
+ * TODO: Also instead of letting mongoose do the validation, it would probably be better for the frontend
+ *       if we caught empty fields before sending them off to mongoose
  */
-const registerUser = async (req, res, next) => {
-  var user = new User();
+const registerUser = async (req, res) => {
+  try {
+    const user = new User();
 
-  user.username = req.body.user.username;
-  user.email = req.body.user.email;
-  user.setPassword(req.body.user.password);
+    user.username = req.body.user.username;
+    user.email = req.body.user.email;
+    user.setPassword(req.body.user.password);
 
-  user
-    .save()
-    .then(function () {
-      return res.json({ user: user.toAuthJSON() });
-    })
-    .catch(next);
+    const result = await user.save();
+    return res.json({ user: result.toAuthJSON() });
+  } catch (err) {
+    if (err.name === 'ValidationError') {
+      return res.status(400).json({ error: err.message });
+    }
+    res.status(500).json({ error: "Something went wrong" });
+  }
 };
 
 /**
@@ -86,9 +91,6 @@ const updateUser = async (req, res, next) => {
       }
       if (typeof req.body.user.email !== "undefined") {
         user.email = req.body.user.email;
-      }
-      if (typeof req.body.user.role !== "undefined") {
-        user.bio = req.body.user.role;
       }
       if (typeof req.body.user.password !== "undefined") {
         user.setPassword(req.body.user.password);

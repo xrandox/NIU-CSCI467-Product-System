@@ -1,15 +1,14 @@
 /**
- * This file provides database functions for Shipping & Handling brackets that are then referenced by /routes/shbrackets.js
+ * This file provides database functions for Shipping & Handling brackets
  */
-
-const SHBracket = require("../models/SHBracket");
+const SHBracket = require("../../models/SHBracket");
 const mongoose = require("mongoose");
 
 /**
  * Gets a json of all brackets
  */
 const getBrackets = async (req, res) => {
-  const brackets = await SHBracket.find({}).sort({ _id: -1 });
+  const brackets = await SHBracket.find({}).sort({ minWeight: 1 });
 
   res.status(200).json(brackets);
 };
@@ -18,24 +17,29 @@ const getBrackets = async (req, res) => {
  * Updates an existing bracket by ID
  */
 const updateBracket = async (req, res) => {
-  const { id } = req.params;
+  try {
+    const { id } = req.params;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(404).json({ error: "Bracket does not exist" });
-  }
-
-  const bracket = await SHBracket.findOneAndUpdate(
-    { _id: id },
-    {
-      ...req.body,
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).json({ error: "Bracket does not exist" });
     }
-  );
-
-  if (!bracket) {
-    return res.status(404).json({ error: "Bracket does not exist" });
+  
+    const bracket = await SHBracket.findOneAndUpdate(
+      { _id: id },
+      {
+        ...req.body,
+      }
+    );
+  
+    if (!bracket) {
+      return res.status(404).json({ error: "Bracket does not exist" });
+    }
+  
+    res.status(200).json(bracket);
+  } catch (error) {
+    res.status(500).json({error: "Error updating bracket"})
   }
 
-  res.status(200).json(bracket);
 };
 
 /**

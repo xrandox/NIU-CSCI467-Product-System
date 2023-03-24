@@ -30,9 +30,7 @@ passport.use(
 
         // Otherwise validate password
         if (!user.validPassword(password)) {
-          return done(null, false, {
-            errors: { "login credentials": "are invalid" },
-          });
+          return done(null, false, { "error": "Invalid Credentials" });
         }
 
         // If good, return user

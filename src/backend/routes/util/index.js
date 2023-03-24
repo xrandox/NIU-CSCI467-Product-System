@@ -1,5 +1,5 @@
 /**
- * Provides generic routing
+ * Provides generic routing functions
  */
 
 var router = require("express").Router();

@@ -1,5 +1,5 @@
 /**
- * This file provides JWT authorization, with both optional and required credentials
+ * This file provides JWT authorization, with credentials either being optional and required
  * Allows us to have secure user and role validation
  */
 
@@ -11,11 +11,13 @@ const secret = process.env.SECRET;
  * Splits the token out of the header
  */
 function getTokenFromHeader(req) {
-  if (req.headers.authorization.split(" ")[0] === "Token") {
-    return req.headers.authorization.split(" ")[1];
+  try {
+    if (req.headers.authorization.split(" ")[0] === "Token") {
+      return req.headers.authorization.split(" ")[1];
+    }
+  } catch (error) {
+    return null;
   }
-
-  return null;
 }
 
 /**

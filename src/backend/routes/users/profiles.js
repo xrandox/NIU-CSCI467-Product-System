@@ -1,10 +1,10 @@
 /**
- * This file contains the API routes for querying the profile system
+ * User Profile Routes
  */
 
 const express = require("express");
-var auth = require("./auth");
-const { getProfile, prepareProfile } = require("../controllers/profiles");
+var auth = require("../util/auth");
+const { getProfile, prepareProfile } = require("../../controllers/users/profiles");
 const router = express.Router();
 
 // Prepare profile

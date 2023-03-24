@@ -1,5 +1,5 @@
 /**
- * User Order routes
+ * User Order Routes
  */
 
 const express = require("express");
@@ -7,8 +7,8 @@ const {
     selfOrder,
     selfOrders,
     addOrder
-} = require("../controllers/order");
-const auth = require("./auth");
+} = require("../../controllers/users/order");
+const auth = require("../util/auth");
 const router = express.Router();
 
 // Get a single order from self
