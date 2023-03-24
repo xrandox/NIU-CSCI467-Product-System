@@ -60,6 +60,7 @@ const addOrder = async (req, res, next) => {
   order
     .save()
     .then(function () {
+      // TODO: Add this order ID to the user's orders array
       return res.json({ order: order.toJSON() });
     })
     .catch(next);
