@@ -3,21 +3,21 @@
  */
 
 const express = require("express");
-const { 
-    selfOrder,
-    selfOrders,
-    addOrder
+const {
+  selfOrder,
+  selfOrders,
+  addOrder,
 } = require("../../controllers/users/order");
-const auth = require("../util/auth");
+const { authRequired } = require("../util/auth");
 const router = express.Router();
 
 // Get a single order from self
-router.get("/:id", auth.required, selfOrder);
+router.get("/:id", authRequired, selfOrder);
 
 // Get all orders from self
-router.get("/", auth.required, selfOrders);
+router.get("/", authRequired, selfOrders);
 
 // Add a new order
-router.post("/", auth.required, addOrder);
+router.post("/", authRequired, addOrder);
 
 module.exports = router;

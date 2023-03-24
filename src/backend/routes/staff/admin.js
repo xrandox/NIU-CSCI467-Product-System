@@ -3,7 +3,7 @@
  */
 
 const express = require("express");
-const auth = require("../util/auth");
+const { authRequired } = require("../util/auth");
 const router = express.Router();
 const {
   getUsers,
@@ -14,15 +14,15 @@ const {
 const { requireAdmin } = require("../util/permissions");
 
 // Get a list of all users
-router.get("/userlist/", auth.required, requireAdmin, getUsers);
+router.get("/userlist/", authRequired, requireAdmin, getUsers);
 
 // Get a single user by id
-router.get("/user/:id", auth.required, requireAdmin, spyUser);
+router.get("/user/:id", authRequired, requireAdmin, spyUser);
 
 // Update a single user by id
-router.patch("/user/:id", auth.required, requireAdmin, manageUser);
+router.patch("/user/:id", authRequired, requireAdmin, manageUser);
 
-// Delete a user by ID 
-router.delete("/user/:id", auth.required, requireAdmin, deleteUser);
+// Delete a user by ID
+router.delete("/user/:id", authRequired, requireAdmin, deleteUser);
 
 module.exports = router;

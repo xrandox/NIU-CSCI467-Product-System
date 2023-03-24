@@ -10,19 +10,19 @@ const {
   deleteBracket,
 } = require("../../controllers/staff/shbrackets");
 const router = express.Router();
-const auth = require("../util/auth");
+const { authRequired } = require("../util/auth");
 const { requireAdmin } = require("../util/permissions");
 
 // Get all S&H brackets
-router.get("/", auth.required, requireAdmin, getBrackets);
+router.get("/", authRequired, requireAdmin, getBrackets);
 
 // Update a single S&H bracket by id
-router.patch("/:id", auth.required, requireAdmin, updateBracket);
+router.patch("/:id", authRequired, requireAdmin, updateBracket);
 
 // Delete a single S&H bracket by id
-router.delete("/:id", auth.required, requireAdmin, deleteBracket);
+router.delete("/:id", authRequired, requireAdmin, deleteBracket);
 
 // Add a new S&H bracket
-router.post("/", auth.required, requireAdmin, addBracket);
+router.post("/", authRequired, requireAdmin, addBracket);
 
 module.exports = router;
