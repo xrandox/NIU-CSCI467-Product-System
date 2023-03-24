@@ -42,7 +42,8 @@ const updatePartInventory = async (req, res) => {
 
   const partInventory = await PartInventory.findOneAndUpdate(
     { partNumber: partNumber },
-    { quantity: req.body.quantity }
+    { quantity: req.body.quantity },
+    { new: true }
   ).exec();
 
   if (!partInventory) {
