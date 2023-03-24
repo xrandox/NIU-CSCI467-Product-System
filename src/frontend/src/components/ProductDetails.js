@@ -23,7 +23,14 @@ const ProductDetails = ({ product }) => {
 
   return (
     <div className="product-details">
-      <h4>{product.name}</h4>
+      <h4>{product.description}</h4>
+      <div>
+        <img src={product.pictureURL} alt={product.description} />
+      </div>
+      <p>
+        <strong>Price: </strong>
+        {product.price}
+      </p>
       <p>
         <strong>Available: </strong>
         {product.quantity}
