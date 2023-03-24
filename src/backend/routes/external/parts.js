@@ -10,6 +10,6 @@ const router = express.Router();
 router.get("/", getParts);
 
 // Get a single part by id
-router.get("/:partnumber", getPart);
+router.get("/:partNumber", getPart);
 
 module.exports = router;
