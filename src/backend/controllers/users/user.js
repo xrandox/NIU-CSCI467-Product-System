@@ -22,17 +22,34 @@ const getUser = async (req, res, next) => {
 
 /**
  * Registers a new user in the database
- * TODO: Add more registration fields?
- * TODO: Also instead of letting mongoose do the validation, it would probably be better for the frontend
- *       if we caught empty fields before sending them off to mongoose
  */
 const registerUser = async (req, res) => {
+  const { username, email, password } = req.body.user;
+
+  let emptyFields = [];
+
+  if (!username) {
+    emptyFields.push("username");
+  }
+  if (!email) {
+    emptyFields.push("email");
+  }
+  if (!password) {
+    emptyFields.push("password");
+  }
+
+  if (emptyFields.length > 0) {
+    return res
+      .status(400)
+      .json({ error: "All fields are required", emptyFields: emptyFields });
+  }
+
   try {
     const user = new User();
 
-    user.username = req.body.user.username;
-    user.email = req.body.user.email;
-    user.setPassword(req.body.user.password);
+    user.username = username;
+    user.email = email;
+    user.setPassword(password);
 
     const result = await user.save();
     return res.json({ user: result.toAuthJSON() });
@@ -48,11 +65,12 @@ const registerUser = async (req, res) => {
  * Checks provided login details against the saved credentials
  */
 const loginUser = async (req, res, next) => {
-  if (!req.body.user.email) {
+  const { email, password } = req.body.user;
+  if (!email) {
     return res.status(422).json({ errors: { email: "can't be blank" } });
   }
 
-  if (!req.body.user.password) {
+  if (!password) {
     return res.status(422).json({ errors: { password: "can't be blank" } });
   }
 
@@ -76,9 +94,9 @@ const loginUser = async (req, res, next) => {
 
 /**
  * Updates a user
- * TODO: Probably need to restrict what can be changed here, and allow admins a more powerful endpoint
  */
 const updateUser = async (req, res, next) => {
+  const { username, email, password, address, name } = req.body.user;
   User.findById(req.auth.id)
     .then(function (user) {
       if (!user) {
@@ -86,20 +104,20 @@ const updateUser = async (req, res, next) => {
       }
 
       // only update fields that were actually passed...
-      if (typeof req.body.user.username !== "undefined") {
-        user.username = req.body.user.username;
+      if (username) {
+        user.username = username;
       }
-      if (typeof req.body.user.email !== "undefined") {
-        user.email = req.body.user.email;
+      if (email) {
+        user.email = email;
       }
-      if (typeof req.body.user.password !== "undefined") {
-        user.setPassword(req.body.user.password);
+      if (password) {
+        user.setPassword(password);
       }
-      if (typeof req.body.user.address !== "undefined") {
-        user.address = req.body.user.address;
+      if (address) {
+        user.address = address;
       }
-      if (typeof req.body.user.orders !== "undefined") {
-        user.orders = req.body.user.orders;
+      if (name) {
+        user.name = name;
       }
 
       return user
