@@ -11,8 +11,6 @@ const secret = process.env.SECRET;
 const Schema = mongoose.Schema;
 const Address = require("./Address");
 
-// TODO: Required fields etc
-
 /**
  * This schema represents a single user
  */
@@ -38,7 +36,11 @@ const userSchema = new Schema(
     name: String,
     passwordHash: String,
     salt: String,
-    role: { type: String, enum: ['user', 'employee', 'admin'], default: 'user' },
+    role: {
+      type: String,
+      enum: ["user", "employee", "admin"],
+      default: "user",
+    },
     address: { type: Address.schema },
     orders: { type: [mongoose.Types.ObjectId] },
   },
@@ -100,7 +102,7 @@ userSchema.methods.toPublicJSON = function () {
 
 // Generates a "prettier" json for admins to view
 userSchema.methods.toAdminJSON = function () {
-  return{
+  return {
     documentID: this._id,
     username: this.username,
     email: this.email,
@@ -108,8 +110,8 @@ userSchema.methods.toAdminJSON = function () {
     role: this.role,
     address: this.address,
     orders: this.orders,
-    createdAt: this.createdAt
-  }
-}
+    createdAt: this.createdAt,
+  };
+};
 
 module.exports = mongoose.model("User", userSchema);
