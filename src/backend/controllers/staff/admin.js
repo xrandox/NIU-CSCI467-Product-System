@@ -9,20 +9,15 @@ const mongoose = require("mongoose");
  * Returns a json of all users, sorted by document ID
  */
 const getUsers = async (req, res) => {
-
   try {
     const users = await User.find({}).sort({ _id: 1 });
-    const prettyUsers = users.map(user => user.toAdminJSON());
-    
-    return res.status(200).json(prettyUsers);
+    const prettyUsers = users.map((user) => user.toAdminJSON());
 
+    return res.status(200).json(prettyUsers);
   } catch (error) {
     return res.status(500).json({ error: "Something went wrong" });
   }
-
 };
-
-// TODO: Maybe a getUsersByRole could be useful
 
 /**
  * Attemps to delete a user by ID
@@ -67,6 +62,8 @@ const spyUser = async (req, res) => {
  */
 const manageUser = async (req, res) => {
   const { id } = req.params;
+  const { username, email, name, password, role, address, orders } =
+    req.body.user;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
     return res.status(404).json({ error: "User does not exist" });
@@ -78,26 +75,31 @@ const manageUser = async (req, res) => {
     return res.status(404).json({ error: "User does not exist" });
   }
 
-  // TODO: add all fields here
-  // only update fields that were actually passed...
-  if (typeof req.body.user.username !== "undefined") {
-    user.username = req.body.user.username;
+  // unfortunately cant just spread the req body because of password :(
+  if (username) {
+    user.username = username;
   }
-  if (typeof req.body.user.email !== "undefined") {
-    user.email = req.body.user.email;
+  if (email) {
+    user.email = email;
   }
-  if (typeof req.body.user.role !== "undefined") {
-    user.role = req.body.user.role;
+  if (name) {
+    user.name = name;
   }
-  if (typeof req.body.user.address !== "undefined") {
-    user.address = req.body.user.address;
+  if (password) {
+    user.setPassword(password);
   }
-  if (typeof req.body.user.orders !== "undefined") {
-    user.orders = req.body.user.orders;
+  if (role) {
+    user.role = role;
+  }
+  if (address) {
+    user.address = address;
+  }
+  if (orders) {
+    user.orders = orders;
   }
 
   return user.save().then(function () {
-    return res.json( user.toAdminJSON() );
+    return res.json(user.toAdminJSON());
   });
 };
 

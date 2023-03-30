@@ -9,10 +9,9 @@ const Schema = mongoose.Schema;
 /**
  * This schema represents a single ordered part within the order
  */
-const orderedPartSchema = new Schema({
+const selectedPartSchema = new Schema({
   partNumber: Number,
   quantity: Number,
-  price: mongoose.Types.Decimal128,
 });
 
-module.exports = mongoose.model("OrderedPart", orderedPartSchema);
+module.exports = mongoose.model("SelectedPart", selectedPartSchema);
