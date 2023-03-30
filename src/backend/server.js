@@ -3,7 +3,7 @@
  */
 
 require("dotenv").config();
-require('./cfg/passport');
+require("./cfg/passport");
 
 const express = require("express");
 const mongoose = require("mongoose");
@@ -16,10 +16,11 @@ const adminRoutes = require("./routes/staff/admin");
 const orderRoutes = require("./routes/users/order");
 const partsRoutes = require("./routes/external/parts");
 const creditRoutes = require("./routes/external/credit");
-
+const cartRoutes = require("./routes/users/cart");
+const devRoutes = require("./routes/dev/dev");
 
 // Suppress strict query warning
-mongoose.set('strictQuery', true);
+mongoose.set("strictQuery", true);
 
 // Create Express App
 const app = express();
@@ -43,6 +44,8 @@ app.use("/api/staff/", employeeRoutes);
 app.use("/api/admin/", adminRoutes);
 app.use("/api/shbrackets/", shbracketRoutes);
 app.use("/api/profiles/", profileRoutes);
+app.use("/api/cart/", cartRoutes);
+app.use("/api/dev/", devRoutes);
 
 // Connect to DB
 mongoose
