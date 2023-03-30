@@ -8,6 +8,8 @@ const {
   getOrder,
   updateOrder,
   getUserOrders,
+  shipOrder,
+  fulfillOrder,
 } = require("../../controllers/staff/employee");
 const { authRequired } = require("../util/auth");
 const { requireEmployee } = require("../util/permissions");
@@ -24,5 +26,11 @@ router.get("/orders/:id", authRequired, requireEmployee, getOrder);
 
 // Update an existing order
 router.patch("/orders/:id", authRequired, requireEmployee, updateOrder);
+
+// Mark an order as fulfilled (packaged)
+router.patch("/fulfill/:id", authRequired, requireEmployee, fulfillOrder);
+
+// Mark an order as shipped
+router.patch("/ship/:id", authRequired, requireEmployee, shipOrder);
 
 module.exports = router;
