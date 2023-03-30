@@ -93,7 +93,7 @@ const editPartInCart = async (req, res, next) => {
     const changeInQuantity = quantity - cartQuantity;
 
     if (changeInQuantity > 0) {
-      const haveInventory = await removeInventory(partNumber, quantity);
+      const haveInventory = await removeInventory(partNumber, changeInQuantity);
       if (!haveInventory) {
         return res
           .status(400)
@@ -101,7 +101,7 @@ const editPartInCart = async (req, res, next) => {
       }
     }
     if (changeInQuantity < 0) {
-      const addedInventory = await addInventory(partNumber, cartQuantity);
+      const addedInventory = await addInventory(partNumber, -changeInQuantity);
       if (!addedInventory) {
         return res.status(500).json({ error: "Failed to unreserve item" });
       }
