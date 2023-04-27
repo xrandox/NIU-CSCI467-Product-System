@@ -38,13 +38,16 @@ const fetchAllDetails = async () => {
 };
 
 const getDetails = async () => {
+  /* Legacy db caching code
+  * For the project, we aren't supposed to cache, so this is commented out
+  * meaning that it will always fetch the latest details
   if (cache && cacheExpiration > new Date().getTime()) {
     return cache;
-  } else {
-    cache = await fetchAllDetails();
-    cacheExpiration = new Date().getTime + 30 * 60 * 1000;
-    return cache;
-  }
+  } else {*/
+  cache = await fetchAllDetails();
+  //cacheExpiration = new Date().getTime + 30 * 60 * 1000;
+  return cache;
+  //}
 };
 
 /**
