@@ -2,7 +2,7 @@
  * This file contains the frontend App
  */
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 //Pages and Components
 import Home from "./pages/Home";
@@ -12,6 +12,8 @@ import Login from "./pages/Login";
 import AdminTools from "./pages/AdminTools";
 import Profile from "./pages/Profile";
 import Navbar from "./components/Navbar";
+
+import Receiving from "./pages/Receiving";
 
 function App() {
   return (
@@ -26,8 +28,13 @@ function App() {
             <Route path="/login/" element={<Login />} />
             <Route path="/admin/" element={<AdminTools />} />
             <Route path="/profile/" element={<Profile />} />
+
+            <Route path="/receiving/" element={<Receiving />} />
           </Routes>
         </div>
+        <Link to="/receiving/">
+            <h1>Receiving</h1>
+        </Link>
       </BrowserRouter>
     </div>
   );
