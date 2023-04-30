@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@ionic-native/core": "^5.36.0",
+    "ionicons": "^7.1.0",
+    "react-icons": "^4.8.0"
+  }
+}
