@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import axios from "axios"
 import authorization from "../components/Auth";
 
@@ -24,11 +25,11 @@ const Receiving = () => {
         // Grab current inventory status from database
         var current_count = 0;
         try {
-            const part = (await axios.get("/api/parts/" + id)).data.part;
-            current_count = part.quantityAvailable;
+            current_count = (await axios.get("/api/parts/" + id)).data.part.quantityAvailable;
         } catch (error) {
             if (error.code === "ERR_BAD_REQUEST") {
                 setErr("Part number not found");
+                setEmptyFields(["id"]);
             } else {
                 setErr(error.toString());
             }

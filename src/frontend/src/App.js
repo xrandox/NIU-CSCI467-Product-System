@@ -14,6 +14,7 @@ import Profile from "./pages/Profile";
 import Navbar from "./components/Navbar";
 
 import Receiving from "./pages/Receiving";
+import Shipping from "./pages/Shipping";
 
 function App() {
   return (
@@ -30,10 +31,14 @@ function App() {
             <Route path="/profile/" element={<Profile />} />
 
             <Route path="/receiving/" element={<Receiving />} />
+            <Route path="/shipping/" element={<Shipping />} />
           </Routes>
         </div>
         <Link to="/receiving/">
             <h1>Receiving</h1>
+        </Link>
+        <Link to="/shipping/">
+            <h1>Shipping</h1>
         </Link>
       </BrowserRouter>
     </div>
