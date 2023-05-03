@@ -1,14 +1,21 @@
-import searchBar from "../components/SearchBar"
+import "./Home.css"
+import React, { useState } from 'react'
+
+import { SearchBar } from "../components/SearchBar";
+import { SearchResultsList } from "../components/SearchResultsList";
 
 const Home = () => {
+
+const [results, setResults] = useState([]);
+
     return (
         <div className="home">
             <div className="search-bar-container">
-                <searchBar />
-                <div>SearchResults</div>
+                <SearchBar setResults={setResults}/>
+                <SearchResultsList results={results}/>
             </div>
         </div>
-        
+
     )
 }
 
