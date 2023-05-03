@@ -1,40 +1,31 @@
-import React, { useState } from 'react';
-
 
 
 const SH_Brackets = () => {
-  function DropdownMenu() {
-    const [selectedItem, setSelectedItem] = useState('');
-  
-    const handleSelectChange = (event) => {
-      setSelectedItem(event.target.value);
-    }
-  
-    return (
-      <div>
-        <label htmlFor="dropdown">Select an item:</label>
-        <select id="dropdown" value={selectedItem} onChange={handleSelectChange}>
-          <option value="">Select an item</option>
-          <option value="item1">Item 1</option>
-          <option value="item2">Item 2</option>
-          <option value="item3">Item 3</option>
-        </select>
-        <p>You selected: {selectedItem}</p>
-      </div>
-    );
-  }
   return ( 
       <div>
+      <article>
       <center>
-      <h1>This is the SH brackets</h1>
+      <h1> Add a New Shipping and Handling Bracket</h1>
+      <label htmlFor="minweight">Minimum Weight</label>
+      <input type="minweight" id="minweight"/>
+      <label htmlFor="maxweight">Maximum Weight</label>
+      <input type="maxweight" id="maxweight"/>
+      <label htmlFor="price">Price</label>
+      <input type="price" id="price"/>
+      <button type="save" className="save-btn"> Save</button>
+      <button type="delete" className="delete-btn">Delete</button>
       </center>
+      </article>
       </div>
+      
 
     
   )
-}
+};
+
 
 
 
 export default SH_Brackets;
+
 
