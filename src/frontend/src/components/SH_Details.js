@@ -1,13 +1,17 @@
+import axios from "axios";
 import { useState } from "react";
 
 const SH_Details = ({ shbracket }) => {
   const [minWeight, setMinWeight] = useState("");
+  const [id, setID] = useState("");
   //...
 
   const handleSave = async (e) => {
     e.preventDefault();
 
     const bracket = { minWeight };
+
+    const res = await axios.patch("/api/shbrackets/" + id);
   };
 
   const handleDelete = async (e) => {

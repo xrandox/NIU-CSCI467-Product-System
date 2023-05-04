@@ -5,6 +5,9 @@ import SH_Details from "../components/SH_Details";
 
 const SH_Brackets = () => {
   const [brackets, setBrackets] = useState(null);
+  const [newBracket, setNewBracket] = useState(null);
+
+  const handleAdd = async (e) => {};
 
   useEffect(() => {
     const fetchBrackets = async () => {
@@ -26,6 +29,7 @@ const SH_Brackets = () => {
                 <SH_Details key={shbracket._id} shbracket={shbracket} />
               ))}
           </div>
+          <button onClick={handleAdd}>Add bracket</button>
         </center>
       </article>
     </div>
