@@ -2,16 +2,37 @@ import axios from "axios";
 import { useState } from "react";
 
 const SH_Details = ({ shbracket }) => {
-  const [minWeight, setMinWeight] = useState("");
+  const [minWeight, setMinWeight] = useState(
+    shbracket.minWeight.$numberDecimal
+  );
+  const [maxWeight, setMaxWeight] = useState(
+    shbracket.maxWeight.$numberDecimal
+  );
+  const [charge, setCharge] = useState(shbracket.charge.$numberDecimal);
   const [id, setID] = useState("");
   //...
+
+  const handleChargeChange = async (e) => {
+    setCharge(e.target.value);
+  };
+
+  const handleMinChange = async (e) => {
+    setMinWeight(e.target.value);
+  };
+
+  const handleMaxChange = async (e) => {
+    setMaxWeight(e.target.value);
+  };
 
   const handleSave = async (e) => {
     e.preventDefault();
 
-    const bracket = { minWeight };
-
-    const res = await axios.patch("/api/shbrackets/" + id);
+    const bracket = { minWeight, maxWeight, charge };
+    const route = "/api/shbrackets/" + shbracket._id;
+    axios
+      .patch(route, bracket)
+      .then()
+      .catch((error) => console.error(error));
   };
 
   const handleDelete = async (e) => {
@@ -25,20 +46,22 @@ const SH_Details = ({ shbracket }) => {
         <input
           type="minweight"
           id="minweight"
-          value={shbracket.minWeight.$numberDecimal}
-          onChange={(e) => setMinWeight(e.target.value)}
+          value={minWeight}
+          onChange={handleMinChange}
         />
         <label htmlFor="maxweight">Maximum Weight</label>
         <input
           type="maxweight"
           id="maxweight"
-          value={shbracket.maxWeight.$numberDecimal}
+          value={maxWeight}
+          onChange={handleMaxChange}
         />
         <label htmlFor="price">Price</label>
         <input
           type="price"
           id="price"
-          value={shbracket.charge.$numberDecimal}
+          value={charge}
+          onChange={handleChargeChange}
         />
         <button type="save" className="save-btn" onClick={handleSave}>
           Save

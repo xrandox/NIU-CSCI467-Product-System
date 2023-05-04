@@ -71,6 +71,9 @@ const addBracket = async (req, res) => {
   });
 
   if (overlappingBracket) {
+    console.log(
+      "Overlapping bracket...Min: " + minWeight + " Max: " + maxWeight
+    );
     return res.status(400).json({
       error: "The submitted bracket overlaps with an existing bracket.",
     });
