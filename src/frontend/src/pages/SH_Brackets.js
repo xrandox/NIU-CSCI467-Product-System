@@ -37,7 +37,7 @@ const SH_Brackets = () => {
 
     axios
       .post("/api/shbrackets/", newBracket)
-      .then()
+      .then((res) => console.log(res))
       .catch((error) => console.error(error));
   };
 

@@ -31,12 +31,19 @@ const SH_Details = ({ shbracket }) => {
     const route = "/api/shbrackets/" + shbracket._id;
     axios
       .patch(route, bracket)
-      .then()
+      .then((res) => console.log(res))
       .catch((error) => console.error(error));
   };
 
   const handleDelete = async (e) => {
     e.preventDefault();
+
+    const route = "/api/shbrackets/" + shbracket._id;
+
+    axios
+      .delete(route)
+      .then((res) => console.log(res))
+      .catch((error) => console.error(error));
   };
 
   return (
