@@ -6,9 +6,14 @@ import SH_Details from "../components/SH_Details";
 const SH_Brackets = () => {
   const [brackets, setBrackets] = useState(null);
   const [newBracket, setNewBracket] = useState(false);
-  const [minWeight, setMinWeight] = useState("0");
-  const [maxWeight, setMaxWeight] = useState("0");
-  const [charge, setCharge] = useState("0");
+  const [minWeight, setMinWeight] = useState(0);
+  const [maxWeight, setMaxWeight] = useState(0);
+  const [charge, setCharge] = useState(0);
+  const [refresh, setRefresh] = useState(false);
+
+  const flipRefresh = async () => {
+    setRefresh(!refresh);
+  };
 
   const handleChargeChange = async (e) => {
     setCharge(e.target.value);
@@ -23,21 +28,34 @@ const SH_Brackets = () => {
   };
 
   const handleAdd = async () => {
-    setNewBracket(true);
+    setNewBracket(!newBracket);
+    setCharge(0);
+    setMinWeight(0);
+    setMaxWeight(0);
   };
 
   const handleDelete = async () => {
     setNewBracket(false);
+    setCharge(0);
+    setMinWeight(0);
+    setMaxWeight(0);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newBracket = { minWeight, maxWeight, charge };
+    const newBracket = {
+      minWeight: Number(minWeight),
+      maxWeight: Number(maxWeight),
+      charge: Number(charge),
+    };
 
     axios
       .post("/api/shbrackets/", newBracket)
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res);
+        handleDelete();
+      })
       .catch((error) => console.error(error));
   };
 
@@ -48,7 +66,7 @@ const SH_Brackets = () => {
     };
 
     fetchBrackets().catch(console.error);
-  }, []);
+  }, [newBracket, refresh]);
 
   return (
     <div>
@@ -58,7 +76,11 @@ const SH_Brackets = () => {
           <div className="products">
             {brackets &&
               brackets.map((shbracket) => (
-                <SH_Details key={shbracket._id} shbracket={shbracket} />
+                <SH_Details
+                  key={shbracket._id}
+                  shbracket={shbracket}
+                  flipRefresh={flipRefresh}
+                />
               ))}
           </div>
           {newBracket && (

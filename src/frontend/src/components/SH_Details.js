@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useState } from "react";
 
-const SH_Details = ({ shbracket }) => {
+const SH_Details = (props) => {
+  const shbracket = props.shbracket;
   const [minWeight, setMinWeight] = useState(
     shbracket.minWeight.$numberDecimal
   );
@@ -37,12 +38,11 @@ const SH_Details = ({ shbracket }) => {
 
   const handleDelete = async (e) => {
     e.preventDefault();
-
     const route = "/api/shbrackets/" + shbracket._id;
 
     axios
       .delete(route)
-      .then((res) => console.log(res))
+      .then((res) => props.flipRefresh())
       .catch((error) => console.error(error));
   };
 
