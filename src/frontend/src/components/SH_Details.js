@@ -1,30 +1,50 @@
-import { useInventoryContext } from "../hooks/useInventoryContext";
+import { useState } from "react";
 
-const SH_Details = ({ product }) => {
-  // Using context to keep the products updated
-  const { dispatch } = useInventoryContext();
+const SH_Details = ({ shbracket }) => {
+  const [minWeight, setMinWeight] = useState("");
+  //...
 
-  // Handle the user clicking the delete button
-  const handleClick = async () => {
-    const resp = await fetch("/api/inventory/" + product._id, {
-      method: "DELETE",
-    });
-    const json = await resp.json();
+  const handleSave = async (e) => {
+    e.preventDefault();
 
-    if (resp.ok) {
-      //if we successfully delete the product, update the context
-      dispatch({ type: "DELETE_PRODUCT", payload: json });
-    }
+    const bracket = { minWeight };
+  };
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
   };
 
   return (
-    <div className="SH-details">
-      
-
+    <div className="product-detail">
+      <form id={shbracket._id}>
+        <label htmlFor="minweight">Minimum Weight</label>
+        <input
+          type="minweight"
+          id="minweight"
+          value={shbracket.minWeight.$numberDecimal}
+          onChange={(e) => setMinWeight(e.target.value)}
+        />
+        <label htmlFor="maxweight">Maximum Weight</label>
+        <input
+          type="maxweight"
+          id="maxweight"
+          value={shbracket.maxWeight.$numberDecimal}
+        />
+        <label htmlFor="price">Price</label>
+        <input
+          type="price"
+          id="price"
+          value={shbracket.charge.$numberDecimal}
+        />
+        <button type="save" className="save-btn" onClick={handleSave}>
+          Save
+        </button>
+        <button type="delete" className="delete-btn" onClick={handleDelete}>
+          Delete
+        </button>
+      </form>
     </div>
   );
-  };
+};
 
-  
-  export default SH_Details;
-
+export default SH_Details;
