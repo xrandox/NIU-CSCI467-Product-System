@@ -28,6 +28,7 @@ const Login = () => {
         localStorage.setItem("token", token);
         axios.defaults.headers.common["Authorization"] = `Token ${token}`;
         navigate("/");
+        window.location.reload();
       } else {
         setError("Request failed with status code: " + response.status);
       }
