@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 
-const SH_Details = (props) => {
+const SHDetails = (props) => {
   const shbracket = props.shbracket;
   const [minWeight, setMinWeight] = useState(
     shbracket.minWeight.$numberDecimal
@@ -10,8 +10,6 @@ const SH_Details = (props) => {
     shbracket.maxWeight.$numberDecimal
   );
   const [charge, setCharge] = useState(shbracket.charge.$numberDecimal);
-  const [id, setID] = useState("");
-  //...
 
   const handleChargeChange = async (e) => {
     setCharge(e.target.value);
@@ -47,7 +45,7 @@ const SH_Details = (props) => {
   };
 
   return (
-    <div className="product-detail">
+    <div className="block">
       <form id={shbracket._id}>
         <label htmlFor="minweight">Minimum Weight</label>
         <input
@@ -70,15 +68,19 @@ const SH_Details = (props) => {
           value={charge}
           onChange={handleChargeChange}
         />
-        <button type="save" className="save-btn" onClick={handleSave}>
-          Save
-        </button>
-        <button type="delete" className="delete-btn" onClick={handleDelete}>
-          Delete
-        </button>
+        <div className="block noborder">
+          <button type="save" className="save-btn" onClick={handleSave}>
+            Save
+          </button>
+        </div>
+        <div className="block noborder">
+          <button type="delete" className="delete-btn" onClick={handleDelete}>
+            Delete
+          </button>
+        </div>
       </form>
     </div>
   );
 };
 
-export default SH_Details;
+export default SHDetails;
