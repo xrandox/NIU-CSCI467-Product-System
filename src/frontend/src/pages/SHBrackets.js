@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-import SH_Details from "../components/SH_Details";
+import SHDetails from "../components/SHDetails";
 
-const SH_Brackets = () => {
+const SHBrackets = () => {
   const [brackets, setBrackets] = useState(null);
   const [newBracket, setNewBracket] = useState(false);
   const [minWeight, setMinWeight] = useState(0);
@@ -76,7 +76,7 @@ const SH_Brackets = () => {
           <div className="products">
             {brackets &&
               brackets.map((shbracket) => (
-                <SH_Details
+                <SHDetails
                   key={shbracket._id}
                   shbracket={shbracket}
                   flipRefresh={flipRefresh}
@@ -84,7 +84,7 @@ const SH_Brackets = () => {
               ))}
           </div>
           {newBracket && (
-            <div className="product-detail">
+            <div className="block">
               <form>
                 <label htmlFor="minweight">Minimum Weight</label>
                 <input
@@ -107,16 +107,24 @@ const SH_Brackets = () => {
                   value={charge}
                   onChange={handleChargeChange}
                 />
-                <button type="save" className="save-btn" onClick={handleSubmit}>
-                  Save
-                </button>
-                <button
-                  type="delete"
-                  className="delete-btn"
-                  onClick={handleDelete}
-                >
-                  Delete
-                </button>
+                <div className="block noborder">
+                  <button
+                    type="save"
+                    className="save-btn"
+                    onClick={handleSubmit}
+                  >
+                    Save
+                  </button>
+                </div>
+                <div className="block noborder">
+                  <button
+                    type="delete"
+                    className="delete-btn"
+                    onClick={handleDelete}
+                  >
+                    Delete
+                  </button>
+                </div>
               </form>
             </div>
           )}
@@ -127,4 +135,4 @@ const SH_Brackets = () => {
   );
 };
 
-export default SH_Brackets;
+export default SHBrackets;
