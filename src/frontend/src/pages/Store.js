@@ -8,7 +8,6 @@ import { SearchBar } from "../components/SearchBar";
 import { SearchResultsList } from "../components/SearchResultsList";
 
 const Store = () => {
-
   // search bar functionality
   const [results, setResults] = useState([]);
   // end search bar functionality
@@ -26,18 +25,18 @@ const Store = () => {
 
   return (
     <div className="store">
-        <div className="home">
-            <div className="search-bar-container">
-                <SearchBar setResults={setResults}/>
-                <SearchResultsList results={results}/>
-                <div className="products">
-                    {products &&
-                    products.map((product) => (
-                    <StoreProduct key={product.number} product={product} />
-                    ))}
-                </div>
-            </div>
+      <div className="home">
+        <div className="search-bar-container">
+          <SearchBar setResults={setResults} />
+          <SearchResultsList results={results} />
+          <div className="products">
+            {products &&
+              products.map((product) => (
+                <StoreProduct key={product.number} product={product} />
+              ))}
+          </div>
         </div>
+      </div>
     </div>
   );
 };
