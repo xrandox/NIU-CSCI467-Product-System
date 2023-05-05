@@ -3,23 +3,31 @@
  */
 
 import axios from "axios";
+import { useState } from "react";
 
 const ProductDetails = ({ product }) => {
+  const [quantity, setQuantity] = useState(1);
 
   const addToCart = () => {
-    axios.post("/api/cart/", {
-      "part": {
-        "partNumber": product.number,
-        "quantity": 1
-      }  
-    })
-        .then((response) => {
-        console.log(response.data)
-    })
-    .catch((error) => {
-        console.log(error)
-    })
-  }
+    axios
+      .post("/api/cart/", {
+        part: {
+          partNumber: product.number,
+          quantity: quantity,
+        },
+      })
+      .then((response) => {
+        alert("Added " + quantity + " of " + product.description + " to cart!");
+        window.location.reload();
+        console.log(response.data);
+      })
+      .catch((error) => {
+        alert(
+          "Not enough of this part to add the requested amount to your cart"
+        );
+        console.log(error);
+      });
+  };
 
   return (
     <div className="product-details">
@@ -33,13 +41,23 @@ const ProductDetails = ({ product }) => {
       </p>
       <p>
         <strong>Quantity Available: </strong>
-        {product.quantity}
+        {product.quantityAvailable}
       </p>
-      <button onClick={() => {
-                addToCart()
-                alert("Part added to cart!")          
-            }}
-      >Add 1 to cart
+      <label htmlFor="numToAdd">Quantity:</label>
+      <input
+        type="number"
+        id="numToAdd"
+        name="numToAdd"
+        min="1"
+        value={quantity}
+        onChange={(e) => setQuantity(e.target.value)}
+      />
+      <button
+        onClick={() => {
+          addToCart();
+        }}
+      >
+        Add to cart
       </button>
     </div>
   );

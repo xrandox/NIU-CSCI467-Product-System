@@ -20,10 +20,6 @@ const userSchema = new Schema(
       type: String,
       unique: true,
       required: [true, "Must have a username"],
-      match: [
-        /^[a-zA-Z0-9]([._-](?![._-])|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$/, // Might not need such a strict regex
-        "invalid username",
-      ],
       index: true,
     },
     email: {
