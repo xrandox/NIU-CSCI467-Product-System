@@ -41,29 +41,6 @@ const Cart = () => {
     setCart((await axios.get("/api/cart/")).data.parts);
   };
 
-  // user fills out order form, including shipping information
-  const checkoutForm = () => {
-    axios
-      .post("/api/orders/", {
-        order: {
-          shippingAddress: {
-            name: "Mr Tester",
-            street: "45519 Mayert Forges",
-            city: "West Charley",
-            state: "IL",
-            zip: "12345",
-            country: "United States",
-          },
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
-
   useEffect(() => {
     fetchCart();
   }, []);
@@ -83,7 +60,7 @@ const Cart = () => {
         {!orderData && (
           <div className="order-form">
             <h1>Shipping Information</h1>
-            <form onSubmit={checkoutForm}>
+            <form>
               <label htmlFor="name">Name</label>
               <input
                 type="text"
