@@ -7,7 +7,6 @@ import jwt_decode from "jwt-decode";
 const Navbar = () => {
     const token = localStorage.getItem("token");
     const {role} = token ? jwt_decode(token) : "user";
-    console.log(role);
 
     return (
         <header>

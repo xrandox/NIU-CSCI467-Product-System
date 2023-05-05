@@ -12,7 +12,7 @@ const Shipping = () => {
         try {
             setOrders(
                 (await axios.get("/api/staff/orders/")).data
-                    .filter(order => order.status !== "Shipped")
+                    .filter(order => order.status === "Awaiting Shipping")
             );
         } catch (error) {
             setErr(error.toString());
