@@ -27,7 +27,7 @@ export const PayProcess = () => {
         )
         .then((response) => {
             console.log(response.data)
-            
+
         })
         .catch((error) => {
             console.log(error)
@@ -69,7 +69,3 @@ export const PayProcess = () => {
 }
 
 export default authorization(PayProcess, ["user"]);
-
-
-
-
