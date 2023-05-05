@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import { FaShoppingCart } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import axios from "axios";
 import authorization from "../components/Auth";
 
 //TODO: Create a context(?)
 const Cart = () => {
-  const nav = useNavigate();
   const [products, setCart] = useState([]);
   const [name, setName] = useState(null);
   const [street, setStreet] = useState(null);
@@ -40,11 +39,6 @@ const Cart = () => {
   const fetchCart = async () => {
     //TODO: Error handling
     setCart((await axios.get("/api/cart/")).data.parts);
-  };
-
-  const proceedToPayment = () => {
-    const link = "/payment/" + orderData.order._id;
-    nav(link);
   };
 
   // user fills out order form, including shipping information
@@ -162,9 +156,9 @@ const Cart = () => {
                 <strong>Total: </strong>
                 {orderData.order.total.$numberDecimal}
               </p>
-              <button className="btn btn-primary" onClick={proceedToPayment}>
-                Proceed to Payment
-              </button>
+              <Link to={"/payment/" + orderData.order._id}>
+                <button className="btn btn-primary">Proceed to Payment</button>
+              </Link>
             </div>
           )}
         </div>

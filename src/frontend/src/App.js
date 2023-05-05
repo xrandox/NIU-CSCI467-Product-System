@@ -18,6 +18,7 @@ import Shipping from "./pages/Shipping";
 import OrderPage from "./pages/OrderPage";
 import SHBrackets from "./pages/SHBrackets";
 import OrderDetailsPage from "./pages/OrderDetailsPage";
+import PayProcess from "./pages/PayProcess";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             <Route path="/shbrackets/" element={<SHBrackets />} />
             <Route path="/receiving/" element={<Receiving />} />
             <Route path="/shipping/" element={<Shipping />} />
+            <Route path="/payment/:orderID" element={<PayProcess />} />
             <Route
               path="/orderdetails/:orderID"
               element={<OrderDetailsPage />}
