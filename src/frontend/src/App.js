@@ -2,7 +2,7 @@
  * This file contains the frontend App
  */
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, } from "react-router-dom";
 
 //Pages and Components
 import Home from "./pages/Home";
@@ -14,6 +14,10 @@ import Profile from "./pages/Profile";
 import Navbar from "./components/Navbar";
 import Receiving from "./pages/Receiving";
 import Shipping from "./pages/Shipping";
+
+
+import Order_Page from "./pages/Order_Page"
+import SH_Brackets from "./pages/SH_Brackets"
 
 function App() {
   return (
@@ -28,10 +32,13 @@ function App() {
             <Route path="/login/" element={<Login />} />
             <Route path="/admin/" element={<AdminTools />} />
             <Route path="/profile/" element={<Profile />} />
+            <Route path="/orders/" element={<Order_Page />} />
+            <Route path="/shbrackets/" element={<SH_Brackets />} />
             <Route path="/receiving/" element={<Receiving />} />
             <Route path="/shipping/" element={<Shipping />} />
           </Routes>
         </div>
+        
       </BrowserRouter>
     </div>
   );
