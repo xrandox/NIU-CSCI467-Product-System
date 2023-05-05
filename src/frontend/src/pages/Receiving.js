@@ -39,13 +39,12 @@ const Receiving = () => {
         // Increment and update inventory
         try {
             const data = { "quantityTotal": (+quantity) + (+current_count)};
-            const resp = await axios.patch("/api/inventory/" + id, data);
+            await axios.patch("/api/inventory/" + id, data);
             
             setId("");
             setQuantity("");
             setErr(null);
             setEmptyFields([]);
-            //TODO: Implement success message(?)
         } catch (error) {
             setErr(error.toString());
         }
