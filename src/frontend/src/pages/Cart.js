@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { FaShoppingCart } from 'react-icons/fa';
+
 
 import axios from "axios"
 import authorization from "../components/Auth"
@@ -14,16 +16,68 @@ const Cart = () => {
         );
     }
 
+    // user fills out order form, including shipping information
+    const checkoutForm = () => {
+      axios.post("/api/orders/", {
+        "order": {
+            "shippingAddress": {
+                "name": "Mr Tester",
+                "street": "45519 Mayert Forges",
+                "city": "West Charley",
+                "state": "IL",
+                "zip": "12345",
+                "country": "United States"
+            }
+        }
+    })
+      .then((response) => {
+          console.log(response.data)
+      })
+      .catch((error) => {
+          console.log(error)
+      })
+  }
+      
+
     useEffect(() => { fetchCart() }, []);
 
     return (
-        //TODO: Don't reuse class names(?)
+        <div className="cart display">
+            <h1>Cart <FaShoppingCart /></h1>
         <div className="productsList">
             <div className="products">
                 {products && products.map((product) => (
                     <CartDetails key={product._id} product={product} />
                 ))}
             </div> 
+            <div className="order-form">
+                <h1>Order Form</h1>
+                <form onSubmit={checkoutForm}>
+                    <label htmlFor="name">Name</label>
+                    <input type="text" id="name" name="name" required />
+                    <label htmlFor="street">Street</label>
+                    <input type="text" id="street" name="street" required />
+                    <label htmlFor="city">City</label>
+                    <input type="text" id="city" name="city" required />
+                    <label htmlFor="state">State</label>
+                    <input type="text" id="state" name="state" required />
+                    <label htmlFor="zip">Zip</label>
+                    <input type="text" id="zip" name="zip" required />
+                    <label htmlFor="country">Country</label>
+                    <input type="text" id="country" name="country" required />
+                    <button className="btn btn-primary">Submit</button>
+                </form>
+            <div className="order-summary">
+                <h1>Order Summary</h1>
+                <p><strong>Subtotal: </strong></p>
+                <p><strong>Tax: </strong></p>
+                <p><strong>Shipping: </strong></p>
+                <p><strong>Total: </strong></p>
+                <button className="btn btn-primary">Checkout</button>
+
+            </div>
+            </div>
+        </div>
         </div>
     )
 }
@@ -53,6 +107,8 @@ const CartDetails = ({ product }) => {
         .then((response) => {
         console.log(response.data)
         fetchPartInfo ({ product })
+        // force page reload
+        window.location.reload();
     })
     .catch((error) => {
         console.log(error)
@@ -70,6 +126,8 @@ const CartDetails = ({ product }) => {
         .then((response) => {
         console.log(response.data)
         fetchPartInfo ({ product })
+        // force page reload
+        window.location.reload();
     })
     .catch((error) => {
         console.log(error)
