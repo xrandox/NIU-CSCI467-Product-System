@@ -6,8 +6,12 @@ import jwt_decode from "jwt-decode";
 
 const Navbar = () => {
     const token = localStorage.getItem("token");
-    const {role} = token ? jwt_decode(token) : "user";
-    console.log(role);
+    const {role} = token ? jwt_decode(token) : "";
+
+    const logout = () => {
+        localStorage.removeItem("token");
+        window.location.reload();
+    }
 
     return (
         <header>
@@ -38,12 +42,18 @@ const Navbar = () => {
                     <h1>Admin Tools</h1>
                 </Link>
             }
-            <Link to="/Cart/">
-                <h1>Cart</h1>
-            </Link>
-            <Link to="/login/">
-                <h1>Login</h1>
-            </Link>
+            {["user"].includes(role) &&
+                <Link to="/Cart/">
+                    <h1>Cart</h1>
+                </Link>
+            }
+            {token ?
+                <button onClick={logout}><h1>Logout</h1></button>
+                :
+                <Link to="/login/">
+                    <h1>Login</h1>
+                </Link>
+            }
         </div>
         </header>
     );
