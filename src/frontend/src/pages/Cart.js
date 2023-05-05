@@ -69,7 +69,7 @@ const Cart = () => {
   }, []);
 
   return (
-    <div className="cart display">
+    <div className="cart display block expand">
       <h1>
         Cart <FaShoppingCart />
       </h1>
@@ -80,88 +80,91 @@ const Cart = () => {
               <CartDetails key={product._id} product={product} />
             ))}
         </div>
-        <div className="order-form">
-          <h1>Order Form</h1>
-          <form onSubmit={checkoutForm}>
-            <label htmlFor="name">Name</label>
-            <input
-              type="text"
-              id="name"
-              name="name"
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-            <label htmlFor="street">Street</label>
-            <input
-              type="text"
-              id="street"
-              name="street"
-              required
-              value={street}
-              onChange={(e) => setStreet(e.target.value)}
-            />
-            <label htmlFor="city">City</label>
-            <input
-              type="text"
-              id="city"
-              name="city"
-              required
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-            />
-            <label htmlFor="state">State</label>
-            <input
-              type="text"
-              id="state"
-              name="state"
-              required
-              value={state}
-              onChange={(e) => setState(e.target.value)}
-            />
-            <label htmlFor="zip">Zip</label>
-            <input
-              type="text"
-              id="zip"
-              name="zip"
-              required
-              value={zip}
-              onChange={(e) => setZip(e.target.value)}
-            />
-            <label htmlFor="country">Country</label>
-            <input
-              type="text"
-              id="country"
-              name="country"
-              required
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-            />
-            <button className="btn btn-primary" onClick={submitOrder}>
-              Submit
-            </button>
-          </form>
-          {orderData && (
-            <div className="order-summary">
-              <h1>Order Summary</h1>
-              <p>
-                <strong>Subtotal: </strong>
-                {orderData.order.subtotal.$numberDecimal}
-              </p>
-              <p>
-                <strong>Shipping: </strong>
-                {orderData.order.shippingAndHandling.$numberDecimal}
-              </p>
-              <p>
-                <strong>Total: </strong>
-                {orderData.order.total.$numberDecimal}
-              </p>
-              <Link to={"/payment/" + orderData.order._id}>
-                <button className="btn btn-primary">Proceed to Payment</button>
-              </Link>
-            </div>
-          )}
-        </div>
+        {!orderData && (
+          <div className="order-form">
+            <h1>Shipping Information</h1>
+            <form onSubmit={checkoutForm}>
+              <label htmlFor="name">Name</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+              <label htmlFor="street">Street</label>
+              <input
+                type="text"
+                id="street"
+                name="street"
+                required
+                value={street}
+                onChange={(e) => setStreet(e.target.value)}
+              />
+              <label htmlFor="city">City</label>
+              <input
+                type="text"
+                id="city"
+                name="city"
+                required
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+              />
+              <label htmlFor="state">State</label>
+              <input
+                type="text"
+                id="state"
+                name="state"
+                required
+                value={state}
+                onChange={(e) => setState(e.target.value)}
+              />
+              <label htmlFor="zip">Zip</label>
+              <input
+                type="text"
+                id="zip"
+                name="zip"
+                required
+                value={zip}
+                onChange={(e) => setZip(e.target.value)}
+              />
+              <label htmlFor="country">Country</label>
+              <input
+                type="text"
+                id="country"
+                name="country"
+                required
+                value={country}
+                onChange={(e) => setCountry(e.target.value)}
+              />
+              <button className="btn btn-primary" onClick={submitOrder}>
+                Submit
+              </button>
+            </form>
+          </div>
+        )}
+
+        {orderData && (
+          <div className="order-summary">
+            <h1>Order Summary</h1>
+            <p>
+              <strong>Subtotal: </strong>
+              {orderData.order.subtotal.$numberDecimal}
+            </p>
+            <p>
+              <strong>Shipping: </strong>
+              {orderData.order.shippingAndHandling.$numberDecimal}
+            </p>
+            <p>
+              <strong>Total: </strong>
+              {orderData.order.total.$numberDecimal}
+            </p>
+            <Link to={"/payment/" + orderData.order._id}>
+              <button className="btn btn-primary">Proceed to Payment</button>
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );
