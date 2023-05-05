@@ -3,6 +3,8 @@ import axios from "axios";
 
 import SH_Details from "../components/SH_Details";
 
+
+
 const SH_Brackets = () => {
   const [brackets, setBrackets] = useState(null);
   const [newBracket, setNewBracket] = useState(false);
@@ -10,6 +12,14 @@ const SH_Brackets = () => {
   const [maxWeight, setMaxWeight] = useState(0);
   const [charge, setCharge] = useState(0);
   const [refresh, setRefresh] = useState(false);
+
+
+
+
+
+
+
+
 
   const flipRefresh = async () => {
     setRefresh(!refresh);

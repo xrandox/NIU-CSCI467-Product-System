@@ -49,6 +49,9 @@ const SH_Details = (props) => {
   return (
     <div className="product-detail">
       <form id={shbracket._id}>
+        <table>
+          <tr>
+            <td>
         <label htmlFor="minweight">Minimum Weight</label>
         <input
           type="minweight"
@@ -56,6 +59,9 @@ const SH_Details = (props) => {
           value={minWeight}
           onChange={handleMinChange}
         />
+        </td>
+        </tr>
+
         <label htmlFor="maxweight">Maximum Weight</label>
         <input
           type="maxweight"
@@ -76,6 +82,8 @@ const SH_Details = (props) => {
         <button type="delete" className="delete-btn" onClick={handleDelete}>
           Delete
         </button>
+        
+        </table>
       </form>
     </div>
   );
