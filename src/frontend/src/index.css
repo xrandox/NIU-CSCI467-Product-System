@@ -83,13 +83,15 @@ code {
   color: var(--dark-gray);
 }
 
-label, input {
+label {
   color: var(--off-white);
   display: block;
 }
 
 input {
-  color: var(--dark-gray);
+  display: block;
+  color: var(--darkest-gray);
+  background-color: var(--off-white);
   padding: 10px;
   margin-top: 10px;
   margin-bottom: 20px;
