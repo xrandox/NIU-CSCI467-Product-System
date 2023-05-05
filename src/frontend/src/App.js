@@ -12,6 +12,8 @@ import Login from "./pages/Login";
 import AdminTools from "./pages/AdminTools";
 import Profile from "./pages/Profile";
 import Navbar from "./components/Navbar";
+import Receiving from "./pages/Receiving";
+import Shipping from "./pages/Shipping";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
             <Route path="/login/" element={<Login />} />
             <Route path="/admin/" element={<AdminTools />} />
             <Route path="/profile/" element={<Profile />} />
+            <Route path="/receiving/" element={<Receiving />} />
+            <Route path="/shipping/" element={<Shipping />} />
           </Routes>
         </div>
       </BrowserRouter>
