@@ -22,6 +22,9 @@ const Navbar = () => {
         <Link to="/login/">
           <h1>Login</h1>
         </Link>
+        <Link to="/Cart/">
+          <h1>Cart</h1>
+        </Link>
       </div>
     </header>
   );

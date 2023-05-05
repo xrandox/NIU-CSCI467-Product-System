@@ -1,19 +1,12 @@
-import "./Home.css"
-import React, { useState } from 'react'
-
-import { SearchBar } from "../components/SearchBar";
-import { SearchResultsList } from "../components/SearchResultsList";
+import { FaGlobe } from 'react-icons/fa';
 
 const Home = () => {
 
-const [results, setResults] = useState([]);
-
     return (
         <div className="home">
-            <div className="search-bar-container">
-                <SearchBar setResults={setResults}/>
-                <SearchResultsList results={results}/>
-            </div>
+            <h1>Welcome to Worldwide Automotive Parts! <FaGlobe /></h1>
+            <p>Users please navigate to the login at the top of the page for the best shopping experience!</p>
+            <p>Once logged in, please navigate to the store to browse our products!</p>
         </div>
 
     )

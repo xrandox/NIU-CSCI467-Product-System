@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import AdminTools from "./pages/AdminTools";
 import Profile from "./pages/Profile";
 import Navbar from "./components/Navbar";
+import Cart from "./pages/Cart";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
             <Route path="/login/" element={<Login />} />
             <Route path="/admin/" element={<AdminTools />} />
             <Route path="/profile/" element={<Profile />} />
+            <Route path="/cart/" element={<Cart />} />
           </Routes>
         </div>
       </BrowserRouter>
