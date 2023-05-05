@@ -44,7 +44,6 @@ const updateBracket = async (req, res) => {
 
 /**
  * Adds a new bracket
- * TODO: more validation here -- no overlapping brackets would be smart
  */
 const addBracket = async (req, res) => {
   const { minWeight, maxWeight, charge } = req.body;
@@ -64,6 +63,17 @@ const addBracket = async (req, res) => {
     return res
       .status(400)
       .json({ error: "Please fill in all fields", emptyFields: emptyFields });
+  }
+
+  const allBrackets = await SHBracket.find({}).sort({ minWeight: 1 });
+  const overlappingBracket = allBrackets.some((bracket) => {
+    return minWeight <= bracket.maxWeight && maxWeight >= bracket.minWeight;
+  });
+
+  if (overlappingBracket) {
+    return res.status(400).json({
+      error: "The submitted bracket overlaps with an existing bracket.",
+    });
   }
 
   try {

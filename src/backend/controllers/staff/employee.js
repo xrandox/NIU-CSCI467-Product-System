@@ -64,11 +64,10 @@ const updateOrder = async (req, res, next) => {
     return res.status(404).json({ error: "Order does not exist" });
   }
 
-  // only update fields that were actually passed...
+  // Any extra fields employees should be able to update?
   if (typeof req.body.order.status !== "undefined") {
     order.status = req.body.order.status;
   }
-  // TODO: do the rest of the fields here
 
   return order
     .save()
@@ -78,9 +77,48 @@ const updateOrder = async (req, res, next) => {
     .catch(next);
 };
 
+const fulfillOrder = async (req, res, next) => {
+  const { id } = req.params;
+  const workerID = req.auth.id;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "Order does not exist" });
+  }
+
+  const order = await Order.findById(id);
+
+  if (!order) {
+    return res.status(404).json({ error: "Order does not exist" });
+  }
+
+  const updatedOrder = await order.fulfillOrder(workerID);
+  return res.status(200).json(updatedOrder);
+};
+
+const shipOrder = async (req, res, next) => {
+  const { id } = req.params;
+  const workerID = req.auth.id;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(404).json({ error: "Order does not exist" });
+  }
+
+  const order = await Order.findById(id);
+
+  if (!order) {
+    return res.status(404).json({ error: "Order does not exist" });
+  }
+
+  const shippedOrder = await order.shipOrder(workerID);
+
+  return res.status(200).json(shippedOrder);
+};
+
 module.exports = {
   allOrders,
   getOrder,
   updateOrder,
   getUserOrders,
+  shipOrder,
+  fulfillOrder,
 };

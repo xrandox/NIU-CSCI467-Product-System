@@ -11,15 +11,7 @@ const mongoose = require("mongoose");
  */
 const submitCard = async (req, res, next) => {
   try {
-    var orderID = req.body.data.orderID;
-    var data = {
-      vendor: "VE017-17",
-      trans: crypto.randomUUID(), // for now
-      cc: req.body.data.cc,
-      name: req.body.data.name,
-      exp: req.body.data.exp,
-      amount: req.body.data.amount,
-    };
+    const { cc, name, exp, orderID } = req.body.data;
 
     if (!mongoose.Types.ObjectId.isValid(orderID)) {
       return res.status(404).json({ error: "Order does not exist" });
@@ -33,13 +25,20 @@ const submitCard = async (req, res, next) => {
         .json({ error: "Could not find order for transaction" });
     }
 
-    if (order.total != req.body.data.amount) {
+    var data = {
+      vendor: "VE017-17",
+      trans: crypto.randomUUID(), // for now
+      cc: cc,
+      name: name,
+      exp: exp,
+      amount: order.total.toString(),
+    };
+
+    if (order.authorizationNumber) {
       return res
         .status(400)
-        .json({ error: "Payment amount does not match order total" });
+        .json({ error: "This order has already been paid for" });
     }
-
-    // TODO: Add check if payment has already been processed?
 
     const response = await axios.post(
       "http://blitz.cs.niu.edu/creditcard",

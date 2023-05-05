@@ -5,8 +5,9 @@
 const Order = require("../../models/Order");
 const mongoose = require("mongoose");
 const Address = require("../../models/Address");
-
-// TODO: We should probably not return all the specifics of the order except to employees. Create a user facing json response in Order.js
+const User = require("../../models/User");
+const Cart = require("../../models/Cart");
+const { emptyCart } = require("./cart");
 
 /**
  * Returns a single order by id, if that order customer is also the current user
@@ -28,7 +29,8 @@ const selfOrder = async (req, res, next) => {
     return res.status(403).json({ error: "Invalid Permissions" });
   }
 
-  res.status(200).json(order);
+  const json = await order.userOrderJSON();
+  res.status(200).json(json);
 };
 
 /**
@@ -47,27 +49,58 @@ const selfOrders = async (req, res, next) => {
 /**
  * Adds a new order from a customer
  */
-const addOrder = async (req, res, next) => {
-  var order = new Order();
-  var address = new Address();
+const submitOrder = async (req, res, next) => {
+  try {
+    const id = req.auth.id;
+    const { shippingAddress } = req.body.order;
 
-  order.customer = req.auth.id;
-  order.total = req.body.order.total;
-  address = req.body.order.shippingAddress;
-  order.parts = req.body.order.parts;
-  order.shippingAddress = address;
+    const [customer, cart] = await Promise.all([
+      User.findById(id),
+      Cart.findOne({ customer: id }),
+    ]);
 
-  order
-    .save()
-    .then(function () {
-      // TODO: Add this order ID to the user's orders array
-      return res.json({ order: order.toJSON() });
-    })
-    .catch(next);
+    if (!customer) {
+      return res.status(400).json({ error: "Could not find current user" });
+    }
+    if (!cart) {
+      return res
+        .status(400)
+        .json({ error: "Could not find current user's cart" });
+    }
+    if (cart.parts.length < 1) {
+      return res.status(400).json({ error: "User's cart is empty" });
+    }
+
+    var order = await Order.create({
+      customer: id,
+      shippingAddress: shippingAddress,
+      subtotal: cart.subtotal,
+      parts: cart.parts,
+      weight: cart.weight,
+    });
+
+    customer.orders.push(order._id);
+
+    const updatedOrder = await order.calculateTotal();
+
+    if (updatedOrder === null) {
+      return res.status(500).json({ error: "Failed to calculate order total" });
+    }
+
+    const eCart = await emptyCart(id);
+    customer.save();
+    if (!eCart) {
+      console.log("Failed to properly empty a cart after checkout");
+    }
+    return res.json({ order: updatedOrder.toJSON() });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Something went wrong" });
+  }
 };
 
 module.exports = {
   selfOrder,
   selfOrders,
-  addOrder,
+  submitOrder,
 };

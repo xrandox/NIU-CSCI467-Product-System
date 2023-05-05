@@ -10,15 +10,15 @@ const mongoose = require("mongoose");
  * Returns a json of the added part if successful, or a json with an error message if not
  */
 const addPartInventory = async (req, res) => {
-  const { partNumber, quantity } = req.body;
+  const { partNumber, quantityTotal } = req.body;
 
   let emptyFields = [];
 
   if (!partNumber) {
     emptyFields.push("partNumber");
   }
-  if (!quantity) {
-    emptyFields.push("quantity");
+  if (!quantityTotal) {
+    emptyFields.push("quantityTotal");
   }
   if (emptyFields.length > 0) {
     return res
@@ -27,7 +27,11 @@ const addPartInventory = async (req, res) => {
   }
 
   try {
-    const partInventory = await PartInventory.create({ partNumber, quantity });
+    const partInventory = await PartInventory.create({
+      partNumber,
+      quantityTotal,
+    });
+
     res.status(200).json(partInventory);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -42,18 +46,49 @@ const updatePartInventory = async (req, res) => {
 
   const partInventory = await PartInventory.findOneAndUpdate(
     { partNumber: partNumber },
-    { quantity: req.body.quantity },
+    { ...req.body },
     { new: true }
-  ).exec();
+  );
 
   if (!partInventory) {
     return res.status(404).json({ error: "No such product" });
   }
+  const savedInv = await partInventory.save();
+  return res.status(200).json(savedInv);
+};
 
-  return res.status(200).json(partInventory);
+const removeInventory = async (partNumber, quantity) => {
+  const inventory = await PartInventory.findOne({ partNumber: partNumber });
+
+  if (!inventory) return false;
+
+  //if we have that much available, remove it and return true
+  if (inventory.quantityAvailable >= quantity) {
+    inventory.quantityReserved += quantity;
+    const newInv = await inventory.save();
+    if (newInv) return true;
+  }
+
+  return false;
+};
+
+const addInventory = async (partNumber, quantity) => {
+  const inventory = await PartInventory.findOne({ partNumber: partNumber });
+
+  if (!inventory) return false;
+
+  inventory.quantityReserved -= quantity;
+  const newInv = await inventory.save();
+  if (newInv) {
+    return true;
+  }
+
+  return false;
 };
 
 module.exports = {
   addPartInventory,
   updatePartInventory,
+  removeInventory,
+  addInventory,
 };
