@@ -150,3 +150,7 @@ th,tr,td,table .block {
   border: none;
   box-shadow: none;
 }
+
+.expand {
+  width: 75vw;
+}
