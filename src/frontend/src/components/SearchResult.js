@@ -8,11 +8,11 @@ export const SearchResult = ({ result }) => {
     // use axios to add to cart using POST request
     const addToCart = () => {
         axios.post("/api/cart/", {
-            number: result.number,
-            description: result.description,
-            price: result.price,
-            quantity: 1
-        })
+            "part": {
+              "partNumber": result.number,
+              "quantity": 1
+            }  
+          })
         .then((response) => {
             console.log(response.data)
         })
