@@ -1,76 +1,111 @@
 import { useState, useEffect } from "react";
 
 import axios from "axios"
-/* import authorization from "../components/Auth" */
-
-import Basket from "../components/Basket";
+import authorization from "../components/Auth"
 
 //TODO: Create a context(?)
 const Cart = () => {
-    const [product, setCart] = useState([]);
+    const [products, setCart] = useState([]);
 
     const fetchCart = async () => {
         //TODO: Error handling
         setCart(
-            (await axios.get("/api/cart/")).data
+            (await axios.get("/api/cart/")).data.parts
         );
     }
 
-    useEffect(() => {fetchCart()});
+    useEffect(() => { fetchCart() }, []);
 
     return (
         //TODO: Don't reuse class names(?)
         <div className="productsList">
             <div className="products">
-                {product && product.map((product) => (
+                {products && products.map((product) => (
                     <CartDetails key={product._id} product={product} />
                 ))}
-                <div>
-                    <Basket />
-                </div>
-            </div>
+            </div> 
         </div>
     )
 }
 
 const CartDetails = ({ product }) => {
 
+  const [partInfo, setPartInfo] = useState({})
+
+  const fetchPartInfo = async ({ product }) => {
+    try {
+      setPartInfo(
+        (await axios.get(`/api/parts/${product.partNumber}`)).data.part
+      )
+    } 
+    catch (error) {
+      console.log(error)
+    }
+  }
+
+  const cartQuanityDecrement = ({ product }) => {
+    axios.patch("/api/cart/", {
+        "part": {
+            "partNumber": product.partNumber,
+            "quantity": product.quantity - 1
+        }
+    })
+        .then((response) => {
+        console.log(response.data)
+        fetchPartInfo ({ product })
+    })
+    .catch((error) => {
+        console.log(error)
+        alert("At least one part must be in cart!")
+    })
+  }
+  
+  const cartQuanityIncrement = ({ product }) => {
+    axios.patch("/api/cart/", {
+        "part": {
+            "partNumber": product.partNumber,
+            "quantity": product.quantity + 1
+        }
+    })
+        .then((response) => {
+        console.log(response.data)
+        fetchPartInfo ({ product })
+    })
+    .catch((error) => {
+        console.log(error)
+        alert("Not enough parts in stock!")
+    })
+  }
+
+  useEffect(() => { 
+    fetchPartInfo ({ product }) }, [ product ]);
+
     return (
         <div className="product-details">
-          <strong>{product.description}</strong>
+          <strong>{partInfo.description}</strong>
           <div>
-            <img src={product.pictureURL} alt={product.name} />
+            <img src={partInfo.pictureURL} alt={partInfo.description} />
           </div>
+          <div id="quantDisplay" style={{display : 'inline-block'}}>
+            <p>
+              <strong>Quantity: </strong>
+              {product.quantity}
+            </p>
+          </div> 
           <p>
             <strong>Price: </strong>
-            {product.price}
+            {partInfo.price}
           </p>
-          <p>
-            Working??????
-          </p>
-          <p>
-            <strong>Quantity Available: </strong>
-            {product.quantity}
-          </p>
+          <div id="quantAdjust" style={{display : 'inline-block'}}>
+            <button onClick={() => {
+              cartQuanityDecrement({ product })
+            }}> - </button>
+            <button onClick={() => {
+              cartQuanityIncrement({ product })
+            }}> + </button>
+          </div>       
         </div>
       );
       }
 
-/* export default authorization(Cart, "user"); */
-export default Cart;
-
-/* import React from "react";
-
-const Cart = () => {
-
-    return (
-        <div className="home">
-            <h1>Welcome to Worldwide Automotive Parts! </h1>
-            <p>Users please navigate to the login at the top of the page for the best shopping experience!</p>
-            <p>Once logged in, please navigate to the store to browse our products!</p>
-        </div>
-
-    )
-}
-
-export default Cart */
+export default authorization(Cart, ["user"]);

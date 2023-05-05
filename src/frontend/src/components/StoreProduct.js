@@ -8,10 +8,12 @@ const ProductDetails = ({ product }) => {
 
   const addToCart = () => {
     axios.post("/api/cart/", {
-        number: product.number,
-        quantity: 1
+      "part": {
+        "partNumber": product.number,
+        "quantity": 1
+      }  
     })
-    .then((response) => {
+        .then((response) => {
         console.log(response.data)
     })
     .catch((error) => {
