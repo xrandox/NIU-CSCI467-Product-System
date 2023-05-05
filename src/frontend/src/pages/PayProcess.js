@@ -1,5 +1,5 @@
 // payment process page
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 import { Cart } from "../components/Cart";
@@ -29,27 +29,34 @@ export const PayProcess = () => {
             console.log(error)
         })
     }
+
     return (
-        <div 
-            className="search-result"
-            // click on result to add to cart, display success message
-            onClick={() => {
-                addToCart()
-                alert("Part added to cart!")
-            }}
-        >
+        <div>
+            <h1>Payment Process</h1>
                 <input
-                    type="date"
-                    id="oldestDate"
-                    name="oldestDate"
-                    value={minDate}
-                    onChange={(e) => setMinDate(e.target.value)}
-                  />
-            { result.description }  ... Click to add to cart </div>
+                    id="orderID"
+                    name="Order ID"
+                    value={orderID}
+                    onChange={(e) => setorderID(e.target.value)}
+                />
+                <input
+                    id="cc"
+                    name="Credit Card"
+                    value={cc}
+                    onChange={(e) => setcc(e.target.value)}
+                />
+                <input
+                    id="name"
+                    name="Name"
+                    value={name}
+                    onChange={(e) => setname(e.target.value)}
+                />
+                <input
+                    id="exp"
+                    name="Expiration Date"
+                    value={exp}
+                    onChange={(e) => setexp(e.target.value)}
+                />
+        </div>
     );
 }
-
-
-
-
-
